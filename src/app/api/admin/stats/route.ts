@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { aiUsage, campaigns, emailMessages, leads, subscriptions, users, workspaces } from "@/lib/db/schema";
 import { requireAuth } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 /** Super-admin only: real platform-wide counts. No fake data — zeros mean zero. */
 export async function GET(req: NextRequest) {
   const auth = await requireAuth(req);

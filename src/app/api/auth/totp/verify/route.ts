@@ -8,6 +8,8 @@ import { decryptSecret, verifyTotp } from "@/lib/crypto";
 import { db, now } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 
+export const dynamic = "force-dynamic";
+
 const verifySchema = z.object({ code: z.string().regex(/^\d{6}$/) });
 
 export async function POST(req: NextRequest) {

@@ -12,6 +12,8 @@ import { auditLog, errorJson, requireAuth } from "@/lib/auth";
 import { db, now } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 
+export const dynamic = "force-dynamic";
+
 function publicUser(user: typeof users.$inferSelect) {
   return {
     id: user.id,

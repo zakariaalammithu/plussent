@@ -5,6 +5,8 @@ import { getUserMemberships, requireAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { workspaces } from "@/lib/db/schema";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   const auth = await requireAuth(req);
   if (auth instanceof Response) return auth;

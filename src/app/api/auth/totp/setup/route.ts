@@ -9,6 +9,8 @@ import { encryptSecret } from "@/lib/crypto";
 import { db, now } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   const auth = await requireAuth(req);
   if (auth instanceof Response) return auth;

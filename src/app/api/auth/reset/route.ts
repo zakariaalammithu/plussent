@@ -14,6 +14,8 @@ import {
 import { db, now } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 
+export const dynamic = "force-dynamic";
+
 const resetSchema = z.object({
   token: z.string().min(10).max(128),
   password: z.string().min(8).max(128),

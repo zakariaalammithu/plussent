@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getWorkspaceAuth } from "@/lib/api-auth";
 
+export const dynamic = "force-dynamic";
+
 const PLANS = ["free", "starter", "growth", "agency", "enterprise"] as const;
 type Plan = (typeof PLANS)[number];
 

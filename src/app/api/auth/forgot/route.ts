@@ -15,6 +15,8 @@ import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { appUrl, brandEmailHtml, sendMail } from "@/lib/mailer";
 
+export const dynamic = "force-dynamic";
+
 const forgotSchema = z.object({ email: z.string().email().max(255) });
 
 export async function POST(req: NextRequest) {

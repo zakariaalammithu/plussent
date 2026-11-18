@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { classifyReplyHeuristic, generateWithProvider, preferredProvider, providerStatus, spamCheckHeuristic } from "@/lib/ai/providers";
 import { requireAuth } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 const LABELS = ["interested", "positive", "meeting_request", "question", "not_interested", "unsubscribe", "out_of_office", "wrong_person", "referral", "negative", "other"] as const;
 
 /** POST { body | text } -> reply classification + spam check.

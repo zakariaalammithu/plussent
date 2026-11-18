@@ -63,6 +63,30 @@ schema on server start (`src/instrumentation.ts`). Background sending needs a
 separate worker/cron hitting the send queue (see `scripts/send-queue.ts`);
 do not run persistent jobs inside serverless functions.
 
+### Production database (required — a local file DB cannot work on Vercel)
+
+Vercel's build machine has no DB file and a read-only filesystem, and its
+serverless functions have no shared disk, so the local `file:./data/plussent.db`
+default is local-dev only. For a working production deploy:
+
+1. Create a free database at https://turso.tech (or any libSQL host) and copy
+   its URL + auth token.
+2. In Vercel → your project → Settings → Environment Variables, set
+   `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` (plus `ENCRYPTION_KEY`,
+   `SESSION_SECRET`, `APP_URL=https://plussent.vercel.app`).
+3. Redeploy (Deployments → ⋯ → Redeploy, or push a new commit).
+
+Without a Turso DB the build now **passes** (the DB client is created lazily,
+API routes are `force-dynamic`, and the startup schema check is skipped during
+build), but signups/logins will honestly return a 500
+`database not configured` until those two vars are set and the app is redeployed.
+That is by design — the app never pretends to work without a database.
+
+> Build failure fixed 2026-11-19: the DB client used to be created at module
+> import time, so Vercel's "Collecting page data" step tried to open a
+> connection and the whole deployment failed (`Failed to collect page data for
+> /api/admin/stats`). See `ARCHITECTURE.md` §5.
+
 ## Branding
 
 Official assets (unmodified) live in `public/brand/`: `plussent-logo.png`

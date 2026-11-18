@@ -4,6 +4,8 @@ import { eq } from "drizzle-orm";
 import { db, makeId, now } from "@/lib/db";
 import { subscriptions, workspaces } from "@/lib/db/schema";
 
+export const dynamic = "force-dynamic";
+
 /**
  * Stripe webhook. Verifies the signature with STRIPE_WEBHOOK_SECRET; without
  * that secret the webhook is refused outright — a subscription is NEVER marked

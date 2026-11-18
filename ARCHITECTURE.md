@@ -64,3 +64,40 @@ surface in Settings → Integrations / AI Providers / Billing, and is marked
 Phase 1 audit ✓ · Phase 2-3 core platform ✓ (auth, dashboard, leads, accounts,
 campaigns, sequences, inbox) · Phase 4 AI ✓ (provider interface + heuristic) ·
 Phase 5 tests + security ✓ · Phase 6 deploy + push ✓ (this commit).
+
+## 5. Vercel build failure (2026-11-19) — root cause & fix
+
+A fresh Vercel project import (`plussent`) failed at build time:
+`Failed to collect page data for /api/admin/stats`, caused by
+`ConnectionFailed("Unable to open connection to lo…")`, and
+`plussent.vercel.app` then returned 404 `DEPLOYMENT_NOT_FOUND` because no
+deployment had ever succeeded.
+
+Root cause: `src/lib/db/index.ts` called `createClient()` at module import
+time, defaulting to a local SQLite file (`file:./data/plussent.db`). Vercel's
+build machine has no such file and a read-only filesystem, so when Next.js
+statically collected page data for API routes, the import itself tried to open
+a connection and crashed the build. Local builds passed only because
+`./data/plussent.db` existed locally. `src/instrumentation.ts` also ran the
+schema check on server start, which could hit the DB during build-time
+collection, and no API route declared `dynamic = "force-dynamic"`.
+
+Fix (no feature logic changed):
+- `src/lib/db/index.ts` — DB client is now created lazily (a Proxy over the
+  drizzle instance; `getDb()` on first query). Importing the module opens no
+  connection. On Vercel with no DB configured, `getDb()` throws a clear
+  `database not configured` error instead of a libSQL connection failure.
+- All 40 API routes under `src/app/api/` now declare
+  `export const dynamic = "force-dynamic"` so Next never statically collects
+  page data for them at build time.
+- `src/instrumentation.ts` — schema check is skipped during
+  `phase-production-build` and on Vercel when no DB URL is configured.
+- `scripts/migrate.ts` — `main()` only runs when invoked as a CLI script, not
+  as an import side effect (it used to run migrations and could `process.exit`
+  on import).
+
+Verified: clean `npm run build` passes with no `DATABASE_URL`/`TURSO_*` set
+and no `./data` directory (the Vercel build conditions); tests 33/33 pass; a
+production smoke run against a temp file DB still signs up, logs in, and
+serves the app. Without a Turso DB the build passes but auth returns an
+honest 500 `database not configured` — see README "Deploy (Vercel)".

@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { users, workspaceMembers, workspaces } from "@/lib/db/schema";
 import { requireAuth } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 /** Super-admin only: list all users with their workspace memberships and plans. Real DB rows only. */
 export async function GET(req: NextRequest) {
   const auth = await requireAuth(req);

@@ -18,6 +18,8 @@ import { db, makeId, now } from "@/lib/db";
 import { subscriptions, users } from "@/lib/db/schema";
 import { appUrl, brandEmailHtml, sendMail } from "@/lib/mailer";
 
+export const dynamic = "force-dynamic";
+
 const signupSchema = z.object({
   email: z.string().email().max(255),
   password: z.string().min(8).max(128),

@@ -5,6 +5,8 @@ import { aiUsage } from "@/lib/db/schema";
 import { generateWithProvider, preferredProvider, providerStatus } from "@/lib/ai/providers";
 import { getWorkspaceAuth } from "@/lib/api-auth";
 
+export const dynamic = "force-dynamic";
+
 const DAILY_CAP = 100;
 const KINDS = ["email_write", "personalization", "reply_classify", "assistant"] as const;
 

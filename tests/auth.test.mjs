@@ -10,8 +10,9 @@ register("./ts-resolver.mjs", import.meta.url);
 
 // Pure-function tests only; DB-backed flows (signup/login sessions) are
 // covered by the migrate + API smoke path, not here.
-// NOTE: importing lib/auth.ts creates the libSQL client eagerly, so point it
-// at an in-memory DB before the imports below (no DB server, no files).
+// NOTE: src/lib/db creates its libSQL client lazily (on first query), so
+// importing lib/auth.ts no longer opens a connection at import time; the
+// in-memory DB below is still set so any incidental DB touch stays local.
 process.env.DATABASE_URL = "file::memory:";
 delete process.env.TURSO_DATABASE_URL;
 delete process.env.TURSO_AUTH_TOKEN;

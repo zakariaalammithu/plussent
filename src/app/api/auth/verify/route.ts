@@ -12,6 +12,8 @@ import {
 import { db, now } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 
+export const dynamic = "force-dynamic";
+
 const verifySchema = z.object({ token: z.string().min(10).max(128) });
 
 async function verifyToken(token: string) {

@@ -18,6 +18,8 @@ import { decryptSecret, verifyTotp } from "@/lib/crypto";
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 
+export const dynamic = "force-dynamic";
+
 const loginSchema = z.object({
   email: z.string().email().max(255),
   password: z.string().min(1).max(128),
