@@ -1,0 +1,921 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<meta name="description" content="PlaseSent — the cold email platform for outreach that lands in the inbox. Warmup, verification, sequencing, personalization and deliverability in one workspace." />
+<link rel="icon" href="data:," />
+<title>PlaseSent — Cold Email Outreach That Lands in the Inbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]), a.btn, .nav-link, .foot-link { min-height: 2.25rem; }
+  :root{
+    /* PlusVibe palette: periwinkle blue primary, coral logo red, dark navy ink,
+       white page with pastel washes, vibrant yellow / violet / rose / orange / green blocks */
+    --bg:#ffffff;
+    --surface:#ffffff; --surface2:#eef1ff;
+    --ink:#0f1a2e; --ink2:#2b3650; --muted:#5a657f;
+    --line:#e3e7f2; --line2:#c9d2ea;
+    --brand:#5b7cff; --brand-deep:#4a68e8; --brand-soft:#e8ecff;
+    --accent:#ff5a4d; --accent-ink:#ffffff;
+    --amber:#ff9e00; --red:#e85d6b; --blue:#5b7cff;
+    --pv-yellow:#ffcc00; --pv-violet:#6c6cff; --pv-rose:#e85d6b;
+    --pv-orange:#ff9e00; --pv-green:#0b9a4d; --pv-mint:#c8ead1;
+    --hero-bg:#ffffff; --hero-ink:#0f1a2e; --hero-muted:#5a657f;
+    --shadow:0 18px 40px -18px rgba(31,45,90,.22);
+    --r-lg:18px; --r-md:12px; --r-sm:8px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0b1220; --surface:#131c30; --surface2:#1a2742;
+      --ink:#eef2ff; --ink2:#c6d0e8; --muted:#93a1c0;
+      --line:#243252; --line2:#2e4066;
+      --brand:#7b93ff; --brand-deep:#5b7cff; --brand-soft:#1d2a4d;
+      --accent:#ff7a6e; --accent-ink:#ffffff;
+      --hero-bg:#0b1220; --hero-ink:#eef2ff; --hero-muted:#93a1c0;
+      --shadow:0 18px 40px -18px rgba(0,0,0,.6);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Public Sans",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{font-family:"Archivo",sans-serif;line-height:1.12;margin:0;letter-spacing:-.01em}
+  p{margin:0}
+  a{color:var(--brand);text-decoration:none}
+  img{max-width:100%}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  .mono{font-family:"IBM Plex Mono",monospace;font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  /* ---------- header ---------- */
+  header.site{position:sticky;top:0;z-index:60;background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:8px;height:64px}
+  .logo{display:flex;align-items:center;gap:9px;font-family:"Archivo";font-weight:900;font-size:1.28rem;color:var(--ink);padding:6px 4px}
+  .logo .mark{width:32px;height:32px;border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none}
+  .logo .mark svg{width:18px;height:18px}
+  .logo em{font-style:normal;color:var(--accent)}
+  .nav-links{display:flex;align-items:center;gap:2px;margin-left:18px}
+  .nav-item{position:relative}
+  .nav-link{display:inline-flex;align-items:center;gap:5px;padding:8px 12px;border-radius:8px;color:var(--ink2);font-weight:600;font-size:.95rem;background:none;border:0;cursor:pointer;font-family:inherit}
+  .nav-link:hover{background:var(--surface2);color:var(--ink)}
+  .nav-link svg{width:12px;height:12px;opacity:.6}
+  .drop{position:absolute;top:calc(100% + 6px);left:0;min-width:290px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:8px;display:none}
+  .nav-item.open .drop{display:block}
+  .drop a{display:flex;gap:11px;padding:9px 10px;border-radius:9px;color:var(--ink);align-items:flex-start;min-height:44px}
+  .drop a:hover{background:var(--surface2)}
+  .drop a b{display:block;font-size:.93rem;line-height:1.25}
+  .drop a span{display:block;font-size:.8rem;color:var(--muted);line-height:1.35}
+  .drop .dic{width:30px;height:30px;flex:none;border-radius:8px;background:var(--brand-soft);display:grid;place-items:center;color:var(--brand)}
+  .drop .dic svg{width:16px;height:16px}
+  .nav-cta{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:10px 18px;font-weight:700;font-size:.95rem;border:1px solid transparent;cursor:pointer;font-family:inherit;transition:transform .12s ease, background .12s ease;min-height:44px}
+  .btn:active{transform:translateY(1px)}
+  .btn-brand{background:var(--brand);color:#fff}
+  .btn-brand:hover{background:var(--brand-deep);color:#fff}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+  .btn-ghost:hover{background:var(--surface2)}
+  .btn-lime{background:var(--brand);color:#fff}
+  .btn-lime:hover{background:var(--brand-deep)}
+  .btn-lg{padding:13px 24px;font-size:1rem;border-radius:12px}
+  .btn-sm{padding:7px 13px;min-height:38px;font-size:.88rem}
+  .burger{display:none;margin-left:auto;background:none;border:1px solid var(--line2);border-radius:9px;width:44px;height:44px;cursor:pointer;place-items:center;color:var(--ink)}
+  .burger svg{width:20px;height:20px}
+  .mobile-menu{display:none;border-top:1px solid var(--line);padding:10px 20px 18px;background:var(--bg)}
+  .mobile-menu.open{display:block}
+  .mobile-menu .mm-group{margin-top:12px}
+  .mobile-menu .mm-group>p{font-family:"IBM Plex Mono";font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+  .mobile-menu a{display:flex;align-items:center;padding:9px 4px;color:var(--ink);font-weight:600;min-height:40px;border-bottom:1px solid var(--line)}
+  .mobile-menu a:last-child{border-bottom:0}
+  @media (max-width:900px){ .nav-links,.nav-cta .hide-m{display:none} .burger{display:grid} .nav-cta{margin-left:0} }
+  /* ---------- hero ---------- */
+  .hero{background:
+      radial-gradient(560px 380px at 4% 0%, rgba(255,197,230,.45), transparent 65%),
+      radial-gradient(620px 420px at 96% 6%, rgba(255,232,150,.5), transparent 65%),
+      radial-gradient(700px 480px at 55% -10%, rgba(200,234,209,.55), transparent 65%),
+      radial-gradient(560px 420px at 88% 88%, rgba(190,200,255,.4), transparent 65%),
+      var(--hero-bg);
+    color:var(--hero-ink);overflow:hidden;position:relative}
+  @media (prefers-color-scheme: dark){
+    .hero{background:
+      radial-gradient(560px 380px at 4% 0%, rgba(232,93,107,.16), transparent 65%),
+      radial-gradient(620px 420px at 96% 6%, rgba(255,204,0,.12), transparent 65%),
+      radial-gradient(700px 480px at 55% -10%, rgba(108,108,255,.18), transparent 65%),
+      var(--hero-bg)}
+  }
+  .hero .wrap{padding-top:64px;padding-bottom:0;position:relative;z-index:2}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.4rem);font-weight:900;color:var(--ink)}
+  .hero h1 .hl{color:var(--brand);text-decoration:underline;text-decoration-color:var(--brand);text-decoration-thickness:.09em;text-underline-offset:.14em;text-decoration-style:wavy}
+  .hero .sub{color:var(--hero-muted);font-size:1.13rem;margin-top:18px;max-width:34rem}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+  .hero-note{margin-top:16px;color:var(--hero-muted);font-size:.88rem;display:flex;gap:16px;flex-wrap:wrap}
+  .hero-note span{display:inline-flex;gap:6px;align-items:center}
+  .hero-note svg{width:14px;height:14px;color:var(--brand)}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:#ffffff;border:1px solid #b9c6ff;color:var(--ink2);border-radius:999px;padding:5px 13px;font-size:.82rem;font-weight:700;margin-bottom:20px;box-shadow:0 4px 14px -6px rgba(31,45,90,.18)}
+  @media (prefers-color-scheme: dark){.pill{background:var(--surface);border-color:var(--line2)}}
+  .pill i{width:7px;height:7px;border-radius:50%;background:var(--brand);display:block}
+  /* dashboard mock */
+  .mock{background:#ffffff;border:1px solid var(--line);border-radius:16px 16px 0 0;box-shadow:0 30px 60px -24px rgba(31,45,90,.35);overflow:hidden;font-size:.82rem;color:#2b3650}
+  .mock-top{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);color:#5a657f;background:#fbfcff}
+  .mock-top i{width:10px;height:10px;border-radius:50%;background:#d5dbf0;display:block}
+  .mock-top i:first-child{background:#ff5a4d}.mock-top i:nth-child(2){background:#ffcc00}.mock-top i:nth-child(3){background:#0b9a4d}
+  .mock-body{display:grid;grid-template-columns:118px 1fr;min-height:300px}
+  .mock-side{border-right:1px solid var(--line);padding:14px 10px;display:flex;flex-direction:column;gap:4px;background:#fbfcff}
+  .mock-side a{color:#5a657f;padding:6px 9px;border-radius:7px;font-weight:600;display:block}
+  .mock-side a.on{background:#e8ecff;color:#5b7cff}
+  .mock-main{padding:16px}
+  .mock-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .mstat{background:#eef1ff;border:1px solid #e0e6ff;border-radius:10px;padding:10px 12px}
+  .mstat b{display:block;color:#0f1a2e;font-family:"Archivo";font-size:1.15rem}
+  .mstat span{color:#5a657f;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+  .mrow{display:flex;justify-content:space-between;gap:10px;padding:9px 2px;border-bottom:1px solid #edf0f8;color:#2b3650}
+  .mrow:last-child{border-bottom:0}
+  .tag{font-size:.68rem;font-weight:700;border-radius:99px;padding:2px 8px;white-space:nowrap}
+  .tag-g{background:rgba(11,154,77,.13);color:#0b7a3e}.tag-a{background:rgba(255,158,0,.16);color:#96600a}.tag-l{background:#e8ecff;color:#4a68e8}
+  .bars{display:flex;align-items:flex-end;gap:5px;height:64px;margin-top:6px}
+  .bars i{flex:1;background:linear-gradient(180deg,#6c6cff,#5b7cff);border-radius:4px 4px 0 0;display:block}
+  @media (max-width:560px){.mock-body{grid-template-columns:1fr}.mock-side{display:none}}
+  /* ---------- sections ---------- */
+  section.block{padding:76px 0}
+  section.block.tight{padding:52px 0}
+  .sec-head{max-width:44rem;margin-bottom:38px}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:800}
+  .sec-head p{color:var(--muted);margin-top:12px;font-size:1.06rem}
+  .kicker{color:var(--brand);margin-bottom:12px;display:block}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media (max-width:900px){.grid3,.grid4{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:600px){.grid3,.grid4,.grid2{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
+  .card h3{font-size:1.12rem;font-weight:700;margin:12px 0 7px}
+  .card p{color:var(--muted);font-size:.95rem}
+  .card .ic{width:42px;height:42px;border-radius:11px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center}
+  .card .ic svg{width:21px;height:21px}
+  /* PlusVibe multi-colour icon chips, cycling the feature palette */
+  .grid3>.card:nth-child(6n+1) .ic,.grid2>.card:nth-child(6n+1) .ic{background:#fff0b8;color:#8a6d00}
+  .grid3>.card:nth-child(6n+2) .ic,.grid2>.card:nth-child(6n+2) .ic{background:#e3e3ff;color:#5555d6}
+  .grid3>.card:nth-child(6n+3) .ic,.grid2>.card:nth-child(6n+3) .ic{background:#fde0e3;color:#c73e4c}
+  .grid3>.card:nth-child(6n+4) .ic,.grid2>.card:nth-child(6n+4) .ic{background:#ffe9c7;color:#a86400}
+  .grid3>.card:nth-child(6n+5) .ic,.grid2>.card:nth-child(6n+5) .ic{background:#d7f2e1;color:#0b7a3e}
+  .grid3>.card:nth-child(6n) .ic,.grid2>.card:nth-child(6n) .ic{background:var(--brand-soft);color:var(--brand)}
+  @media (prefers-color-scheme: dark){
+    .grid3>.card:nth-child(6n+1) .ic,.grid2>.card:nth-child(6n+1) .ic{background:#3d3410;color:#ffd94d}
+    .grid3>.card:nth-child(6n+2) .ic,.grid2>.card:nth-child(6n+2) .ic{background:#2c2c5e;color:#a5a5ff}
+    .grid3>.card:nth-child(6n+3) .ic,.grid2>.card:nth-child(6n+3) .ic{background:#4a2329;color:#ff9aa5}
+    .grid3>.card:nth-child(6n+4) .ic,.grid2>.card:nth-child(6n+4) .ic{background:#45300e;color:#ffb85c}
+    .grid3>.card:nth-child(6n+5) .ic,.grid2>.card:nth-child(6n+5) .ic{background:#123c26;color:#4ade80}
+  }
+  a.card{display:block;color:var(--ink);transition:border-color .15s, transform .15s}
+  a.card:hover{border-color:var(--brand);transform:translateY(-2px)}
+  a.card .go{color:var(--brand);font-weight:700;font-size:.9rem;display:inline-flex;gap:6px;margin-top:12px;align-items:center}
+  .band{background:#f6f8ff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  @media (prefers-color-scheme: dark){.band{background:var(--surface2)}}
+  .darkband{background:var(--pv-violet);color:#fff}
+  .darkband h2{color:#fff}.darkband p{color:rgba(255,255,255,.86)}
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:left}
+  @media (max-width:700px){.stats-row{grid-template-columns:repeat(2,1fr)}}
+  .stat b{font-family:"Archivo";font-size:2rem;font-weight:800;display:block}
+  .stat span{color:var(--muted);font-size:.92rem}
+  .darkband .stat span{color:rgba(255,255,255,.86)}
+  .check-list{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+  .check-list li{display:flex;gap:11px;align-items:flex-start;color:var(--ink2)}
+  .check-list svg{width:19px;height:19px;color:var(--brand);flex:none;margin-top:3px}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  @media (max-width:900px){.split{grid-template-columns:1fr;gap:28px}}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;box-shadow:var(--shadow)}
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:step}
+  @media (max-width:800px){.steps{grid-template-columns:1fr}}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
+  .step .num{font-family:"IBM Plex Mono";font-weight:600;font-size:.8rem;color:var(--brand);background:var(--brand-soft);border-radius:8px;padding:4px 10px;display:inline-block}
+  .step h3{margin:14px 0 7px;font-size:1.08rem}
+  .step p{color:var(--muted);font-size:.94rem}
+  /* pricing */
+  .toggle{display:inline-flex;background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+  .toggle button{border:0;background:transparent;padding:8px 18px;border-radius:999px;font-weight:700;cursor:pointer;color:var(--muted);font-family:inherit;font-size:.92rem;min-height:38px}
+  .toggle button.on{background:var(--surface);color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+  .toggle .save{color:var(--brand);font-size:.78rem}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+  @media (max-width:900px){.price-grid{grid-template-columns:1fr}}
+  .plan{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px;display:flex;flex-direction:column}
+  .plan.hot{border:2px solid var(--brand);position:relative}
+  .plan .flag{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--pv-yellow);color:#3a2e00;font-weight:800;font-size:.76rem;border-radius:99px;padding:4px 14px;white-space:nowrap}
+  .plan h3{font-size:1.25rem}
+  .plan .who{color:var(--muted);font-size:.92rem;margin-top:5px;min-height:2.6em}
+  .price{font-family:"Archivo";font-size:2.6rem;font-weight:900;margin:16px 0 2px}
+  .price small{font-size:.95rem;font-weight:600;color:var(--muted)}
+  .per{color:var(--muted);font-size:.88rem;margin-bottom:18px}
+  .plan ul{list-style:none;margin:0 0 24px;padding:0;display:grid;gap:9px;font-size:.94rem;color:var(--ink2)}
+  .plan ul li{display:flex;gap:9px}.plan ul svg{width:17px;height:17px;color:var(--brand);flex:none;margin-top:3px}
+  .plan .btn{margin-top:auto}
+  /* faq */
+  .faq{max-width:760px;margin:0 auto}
+  .faq details{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+  .faq summary{cursor:pointer;padding:17px 20px;font-weight:700;font-family:"Archivo";list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center;min-height:52px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";font-size:1.3rem;color:var(--brand);font-weight:600}
+  .faq details[open ] summary::after{content:"–"}
+  .faq .ans{padding:0 20px 18px;color:var(--muted)}
+  /* page hero (inner pages) */
+  .page-hero{padding:64px 0 8px}
+  .page-hero h1{font-size:clamp(2rem,4.4vw,3.1rem);font-weight:900;max-width:20em}
+  .page-hero .sub{color:var(--muted);font-size:1.12rem;margin-top:16px;max-width:38rem}
+  .crumb{font-size:.85rem;color:var(--muted);margin-bottom:18px}
+  .crumb a{color:var(--muted);font-weight:600}.crumb a:hover{color:var(--brand)}
+  /* stories */
+  .story{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column}
+  .story .quote{font-size:1.05rem;line-height:1.55;color:var(--ink)}
+  .story .who{margin-top:auto;padding-top:18px;display:flex;gap:12px;align-items:center}
+  .avatar{width:42px;height:42px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-family:"Archivo";font-weight:800;flex:none}
+  .story .who b{display:block;font-size:.93rem}.story .who span{color:var(--muted);font-size:.83rem}
+  .story .metric{font-family:"Archivo";font-weight:900;font-size:1.7rem;color:var(--brand)}
+  /* tools */
+  .tool-out{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:16px}
+  label.f{display:block;font-weight:700;font-size:.9rem;margin:14px 0 6px}
+  input[type=text],input[type=email],input[type=number],textarea,select{width:100%;padding:11px 13px;border:1px solid var(--line2);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:.97rem}
+  textarea{resize:vertical}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--brand);outline-offset:1px}
+  .scorebar{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
+  .scorebar i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .3s}
+  input[type=range]{width:100%;accent-color:var(--brand)}
+  /* blog */
+  .post-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column}
+  .post-card .thumb{height:150px;display:grid;place-items:center;color:#fff;font-family:"Archivo";font-weight:800;font-size:1.05rem;padding:20px;text-align:center}
+  .post-card .body{padding:22px;display:flex;flex-direction:column;flex:1}
+  .post-card h3{font-size:1.13rem;margin:8px 0}
+  .post-card p{color:var(--muted);font-size:.93rem;flex:1}
+  .post-card .meta{font-size:.8rem;color:var(--muted)}
+  article.post{max-width:720px;margin:0 auto}
+  article.post h2{font-size:1.5rem;margin:34px 0 10px}
+  article.post p{color:var(--ink2);margin-bottom:14px;font-size:1.03rem}
+  article.post ul{color:var(--ink2);margin:0 0 14px;padding-left:22px}
+  article.post li{margin-bottom:7px}
+  .legal{max-width:760px}
+  .legal h2{font-size:1.35rem;margin:30px 0 8px}
+  .legal p,.legal li{color:var(--ink2)}
+  .legal ul{padding-left:22px}
+  /* cta band */
+  .cta-band{background:var(--pv-yellow);border-radius:22px;padding:52px 40px;text-align:center;color:#0f1a2e}
+  .cta-band h2{color:#0f1a2e;font-size:clamp(1.6rem,3.4vw,2.4rem)}
+  .cta-band p{color:#4a3f10;margin:12px auto 26px;max-width:32rem}
+  /* footer */
+  footer.site{border-top:1px solid var(--line);margin-top:0;background:var(--surface)}
+  .foot-grid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px;padding:52px 0 34px}
+  @media (max-width:900px){.foot-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.foot-grid{grid-template-columns:1fr 1fr}}
+  .foot-grid h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:13px;color:var(--ink)}
+  .foot-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+  .foot-link{display:inline-flex;align-items:center;color:var(--muted);font-size:.93rem;padding:4px 0;min-height:32px}
+  .foot-link:hover{color:var(--brand)}
+  .foot-bottom{border-top:1px solid var(--line);padding:18px 0 26px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.87rem}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,80px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:11px;font-weight:600;z-index:99;transition:transform .3s;box-shadow:var(--shadow);max-width:90vw;text-align:center}
+  .toast.show{transform:translate(-50%,0)}
+  .calc-out{font-family:"Archivo";font-size:1.9rem;font-weight:900;color:var(--brand)}
+  .seg-ctl{display:flex;gap:8px;flex-wrap:wrap}
+  .seg-ctl button{border:1px solid var(--line2);background:var(--surface);border-radius:99px;padding:8px 15px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--ink2);min-height:38px}
+  .seg-ctl button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .hidden{display:none!important}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="#/" aria-label="PlaseSent home">
+      <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6.5C3 5.1 4.1 4 5.5 4h13C19.9 4 21 5.1 21 6.5v7c0 1.4-1.1 2.5-2.5 2.5H12l-4.6 3.8c-.5.4-1.4.1-1.4-.6V16H5.5C4.1 16 3 14.9 3 13.5v-7Z" fill="#ffffff"/><path d="M7.5 9.2h9M7.5 12h5.5" stroke="#ff5a4d" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      Plase<em>Sent</em>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <div class="nav-item" data-drop>
+        <button class="nav-link" aria-haspopup="true">Product <svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+        <div class="drop" id="drop-product"></div>
+      </div>
+      <div class="nav-item" data-drop>
+        <button class="nav-link" aria-haspopup="true">Solutions <svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+        <div class="drop" id="drop-solutions"></div>
+      </div>
+      <div class="nav-item"><a class="nav-link" href="#/pricing">Pricing</a></div>
+      <div class="nav-item"><a class="nav-link" href="#/stories">Customer stories</a></div>
+      <div class="nav-item" data-drop>
+        <button class="nav-link" aria-haspopup="true">Resources <svg viewBox="0 0 24 24" fill="none"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+        <div class="drop" id="drop-resources"></div>
+      </div>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm hide-m" href="#/pricing">Log in</a>
+      <a class="btn btn-brand btn-sm" href="#/get-started">Start free</a>
+      <button class="burger" id="burger" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu"></div>
+</header>
+
+<main id="app" tabindex="-1"></main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="#/" style="padding-left:0"><span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 6.5C3 5.1 4.1 4 5.5 4h13C19.9 4 21 5.1 21 6.5v7c0 1.4-1.1 2.5-2.5 2.5H12l-4.6 3.8c-.5.4-1.4.1-1.4-.6V16H5.5C4.1 16 3 14.9 3 13.5v-7Z" fill="#ffffff"/><path d="M7.5 9.2h9M7.5 12h5.5" stroke="#ff5a4d" stroke-width="1.8" stroke-linecap="round"/></svg></span>Plase<em>Sent</em></a>
+        <p style="color:var(--muted);font-size:.93rem;margin-top:12px;max-width:17rem">Cold email outreach that lands in the inbox — warmup, verification, sequencing and deliverability in one workspace.</p>
+      </div>
+      <div><h4>Product</h4><ul id="foot-product"></ul></div>
+      <div><h4>Solutions</h4><ul id="foot-solutions"></ul></div>
+      <div><h4>Resources</h4><ul id="foot-resources"></ul></div>
+      <div><h4>Company</h4><ul>
+        <li><a class="foot-link" href="#/stories">Customer stories</a></li>
+        <li><a class="foot-link" href="#/pricing">Pricing</a></li>
+        <li><a class="foot-link" href="#/blog">Blog</a></li>
+        <li><a class="foot-link" href="#/privacy">Privacy policy</a></li>
+        <li><a class="foot-link" href="#/terms">Terms of service</a></li>
+      </ul></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 PlaseSent. All rights reserved.</span>
+      <span>Built for senders who respect the inbox.</span>
+    </div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+<script>
+"use strict";
+/* ============ icons (inline SVG paths) ============ */
+const IC = {
+  warmup:'<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.9"/>',
+  spark:'<path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M18.5 15.5l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z" fill="currentColor"/>',
+  auto:'<path d="M13 2 4.5 13.5H11L9.8 22 18.5 10H12L13 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>',
+  enrich:'<circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.9"/><path d="m20 20-3.8-3.8M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>',
+  verify:'<path d="M12 3l7 2.6v5.2c0 4.6-3 8-7 10.2-4-2.2-7-5.6-7-10.2V5.6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 11.6 2.1 2.1 3.9-4.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>',
+  list:'<path d="M8.5 6h12M8.5 12h12M8.5 18h12" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M4 6h.01M4 12h.01M4 18h.01" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
+  follow:'<path d="M20 12a8 8 0 1 1-2.3-5.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M20 3v4h-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>',
+  seq:'<circle cx="5" cy="6" r="2.2" stroke="currentColor" stroke-width="1.8"/><circle cx="5" cy="18" r="2.2" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="12" r="2.2" stroke="currentColor" stroke-width="1.8"/><path d="M7 7.2 16.8 11M7 16.8 16.8 13M5 8.2v7.6" stroke="currentColor" stroke-width="1.8"/>',
+  deliver:'<path d="M3 11.5 21 4l-4.8 16.5-2.6-6.7L3 11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13.6 13.8 21 4" stroke="currentColor" stroke-width="1.8"/>',
+  api:'<path d="m8 8-4.5 4L8 16M16 8l4.5 4L16 16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 5 10.5 19" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>',
+  phone:'<rect x="7" y="2.5" width="10" height="19" rx="2.4" stroke="currentColor" stroke-width="1.8"/><path d="M10.5 5h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  label:'<path d="M3.5 12V4.5H11l9.5 9.5-7.5 7.5L3.5 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8" cy="9" r="1.6" fill="currentColor"/>',
+  test:'<path d="M9 3h6M10 3v6.3L4.8 18a2.4 2.4 0 0 0 2.1 3.5h10.2A2.4 2.4 0 0 0 19.2 18L14 9.3V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 15h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  check:'<path d="m4.5 12.5 5 5 10-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>',
+  chart:'<path d="M4 20V4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M4 20h16" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M8 16v-5M12 16V8M16 16v-8M20 16V6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>',
+  inbox:'<path d="M3 13.5 5.6 5h12.8L21 13.5V19a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 19v-5.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 13.5h5.2l1.3 2.3h5l1.3-2.3H21" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>',
+  users:'<circle cx="9" cy="8.5" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M3 20c.6-3.2 3-5 6-5s5.4 1.8 6 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 5.4a3.5 3.5 0 0 1 0 6.2M18.5 15.4c1.4.8 2.3 2.2 2.6 4.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  tool:'<path d="M14.5 6.5a4 4 0 0 1 5.3-3.8L16 6.5l2 2 3.8-3.8a4 4 0 0 1-5.4 5.3L7 19.4a2.1 2.1 0 0 1-3-3l9.4-9.4a4 4 0 0 1 1.1-.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" transform="scale(.92) translate(1 1)"/>',
+  book:'<path d="M5 3.5h11A2.5 2.5 0 0 1 18.5 6v14.5H7.5A2.5 2.5 0 0 1 5 18V3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M5 18a2.5 2.5 0 0 1 2.5-2.5h11" stroke="currentColor" stroke-width="1.8"/>'
+};
+function icon(name, size){ return '<svg viewBox="0 0 24 24" fill="none" width="'+(size||24)+'" height="'+(size||24)+'" aria-hidden="true">'+(IC[name]||IC.check)+'</svg>'; }
+const CHECK = icon('check', 19);
+
+/* ============ product data ============ */
+const FEATURES = [
+ { slug:'warmup', icon:'warmup', name:'Email Warmup', short:'Keep every inbox warm and trusted, automatically.',
+   tag:'Never land in spam because of a cold inbox again',
+   intro:'New and idle mailboxes start with no sending reputation. PlaseSent Warmup joins your inboxes to a private peer network that exchanges realistic opens, replies and rescues from spam — so mailbox providers see a sender people actually talk to, before your first campaign goes out.',
+   points:['Automatic warmup for every connected inbox, no manual babysitting','Positive-engagement only: opens, replies and thread activity that build trust','Spam-rescue pulls warmup mail out of the promotions and spam folders','Per-inbox health score with ramp-up schedules matched to your sending volume','Warmup keeps running quietly in the background while you send campaigns'],
+   steps:[['Connect your inboxes','Add Gmail, Outlook or any SMTP/IMAP mailbox in a couple of clicks. Warmup can start the same minute.'],['We build engagement','Your inbox exchanges natural-looking conversations with the warmup network, growing volume day by day.'],['Send with confidence','Watch the health score climb, then launch campaigns from inboxes providers already trust.']],
+   faq:[['How long should I warm up a new inbox?','Give a brand-new inbox at least 2–3 weeks of warmup before heavy sending, and keep warmup on while campaigns run. Older, active inboxes usually need less ramp time.'],['Does warmup replace good sending practice?','No. Warmup builds reputation, but list quality, relevance and volume discipline still decide your results. PlaseSent handles the other pieces too — verification, limits and placement testing.'],['Can I warm up unlimited inboxes?','Yes — warmup is included on every plan for every inbox you connect, with no per-inbox fee.']] },
+ { slug:'personalization', icon:'spark', name:'AI Personalization', short:'First lines and angles written for each prospect.',
+   tag:'Emails that read like you researched every prospect',
+   intro:'Generic templates get generic results. PlaseSent reads each prospect\u2019s public signals — their role, company, recent posts and tech stack — and drafts a personal opener and angle for every single email, which you can review, edit or auto-approve.',
+   points:['Personal first lines generated per prospect, not mail-merge tokens','Pulls from LinkedIn posts, company news, job changes and website copy','Spintax and dynamic fields for subject lines, CTAs and whole paragraphs','Tone controls: keep it formal, casual, or match your own past emails','Review queue — approve, tweak or regenerate any line before it sends'],
+   steps:[['Import your list','Upload prospects or sync them from your CRM. Enrichment fills in the missing context automatically.'],['Pick your angle','Choose what the AI should reference — a recent post, a hiring signal, a shared tool — or let it decide.'],['Send at scale','Every email goes out with its own opener while the rest of your sequence stays perfectly consistent.']],
+   faq:[['Will the AI lines sound robotic?','They are drafted from real facts about the prospect and pass through natural-language checks. Most users approve over 90% of lines unchanged — and you can always edit.'],['What data does it use?','Only public information: profiles, company pages, posts and the fields already in your list. Nothing is invented — if there is no signal, the line is skipped, not faked.']] },
+ { slug:'automation', icon:'auto', name:'Automation', short:'Workflows that react to replies, clicks and meetings.',
+   tag:'Put follow-through on autopilot',
+   intro:'The money in outbound is in the follow-through. PlaseSent automations watch every reply, click, bounce and booking, then act: pause sequences for people who reply, tag hot leads, notify your team in Slack, or push outcomes straight into your CRM.',
+   points:['Trigger on replies, clicks, opens, bounces, unsubscribes and meetings','Auto-pause sequences the moment a prospect replies — no double emails','Route positive replies to the right teammate or Slack channel instantly','Two-way CRM sync with HubSpot, Salesforce, Pipedrive and Zoho','Webhooks and Zapier/Make support for everything else'],
+   steps:[['Choose a trigger','Start from a template — reply routing, bounce protection, meeting booked — or build your own.'],['Add actions','Tag, assign, notify, sync or move the lead. Stack as many actions as the workflow needs.'],['Let it run','Automations fire in real time across every campaign and inbox in your workspace.']],
+   faq:[['Do automations work across campaigns?','Yes. A workflow can listen to one campaign, a folder of campaigns, or your whole workspace.'],['What happens when a prospect replies mid-sequence?','Their sequence pauses immediately and the reply lands in your unified inbox, assigned by your routing rules.']] },
+ { slug:'enrichment', icon:'enrich', name:'Data Enrichment', short:'Fill in missing emails, roles and company data.',
+   tag:'Turn a name and a company into a reachable prospect',
+   intro:'A spreadsheet of names is not a lead list. PlaseSent Enrichment waterfalls across multiple data providers to find work emails, direct dials, roles, seniority, company size, funding and tech stack — then verifies everything it finds before it touches your campaign.',
+   points:['Waterfall enrichment across several providers for maximum coverage','Finds verified work emails, job titles, seniority and department','Company data: size, industry, location, funding and technologies used','Every found email is verified automatically — invalid ones never reach a campaign','Pay only for successful finds, never for empty lookups'],
+   steps:[['Upload what you have','Names, companies, LinkedIn URLs or domains — any starting point works.'],['We waterfall the rest','Providers are queried in sequence until the fields you asked for are filled.'],['Export clean data','Download enriched, verified leads or send them straight into a sequence.']],
+   faq:[['What match rate should I expect?','It depends on the input quality and region, but waterfalling across providers typically fills far more than any single database. You only pay for successful finds.'],['Is the data compliant?','Enrichment uses publicly available business data and is processed under our data-processing terms. Prospects can opt out at any time.']] },
+ { slug:'verification', icon:'verify', name:'Email Verification', short:'Catch invalid addresses before they hurt you.',
+   tag:'Stop bounces before they torch your domain',
+   intro:'Every hard bounce tells mailbox providers you don\u2019t know your list. PlaseSent Verification checks syntax, domain, MX records, catch-all behaviour and mailbox existence in bulk — flagging risky addresses so only safe emails ever get sent.',
+   points:['Bulk verification for lists of any size, results in minutes','Detects invalid, disposable, role-based and catch-all addresses','Risk scoring per address: safe, risky or do-not-send','Automatic re-verification of stale lists before a campaign launches','API verification for forms and real-time sign-up flows'],
+   steps:[['Upload your list','Drag in a CSV or pick leads already inside PlaseSent.'],['We run the checks','Each address passes syntax, domain, MX, catch-all and mailbox checks.'],['Send to the safe segment','Export the full report, or one-click remove the addresses that would bounce.']],
+   faq:[['What bounce rate should I aim for?','Keep hard bounces under 2%. Verification typically removes the addresses responsible for the vast majority of bounces.'],['Are catch-all addresses safe to send?','They are uncertain by nature. PlaseSent labels them separately so you can send a small test segment first instead of risking the whole list.']] },
+ { slug:'list-management', icon:'list', name:'List Management', short:'Clean, dedupe and segment every lead list.',
+   tag:'One clean, living home for every lead',
+   intro:'Leads scattered across spreadsheets and tools go stale fast. PlaseSent keeps every list deduplicated, enriched and segmented in one place, with suppression lists that apply everywhere — so no one ever gets emailed twice, or after they opted out.',
+   points:['Automatic deduplication across all lists and campaigns','Global suppression list honoured by every sequence, always','Segments by role, company size, engagement, custom fields and more','Lead status tracking from new to replied, meeting booked or not interested','Bulk edit, merge and clean-up tools for messy imports'],
+   steps:[['Bring lists together','Import from CSV, your CRM or another sending tool. Duplicates are flagged on the way in.'],['Segment in seconds','Filter by any field or behaviour and save the view as a reusable segment.'],['Stay compliant','Unsubscribes and suppressions sync everywhere instantly — no list is ever out of date.']],
+   faq:[['Can I import from another cold email tool?','Yes — CSV import plus direct migrations for common tools. Our team will help move large lists free on annual plans.'],['How do suppression lists work?','Add an email or a whole domain once, and it is excluded from every current and future campaign in the workspace.']] },
+ { slug:'follow-up', icon:'follow', name:'Follow-up Sequences', short:'Persistent, polite follow-ups that stop on reply.',
+   tag:'Most replies come after the first email. Be there.',
+   intro:'A single email is a coin toss; a thoughtful sequence is a system. PlaseSent follow-ups bump threads at the right intervals, vary the angle each time, and stop the instant a prospect replies — so you stay persistent without ever being pushy.',
+   points:['Bump emails that reply inside the original thread for natural continuity','Different angle per step: value, social proof, a resource, a gentle break-up','Send windows matched to each prospect\u2019s timezone and working hours','Automatic stop on reply, click-to-book or unsubscribe','Per-step analytics show exactly which bump earns the replies'],
+   steps:[['Write step one','Start from your best opener or a proven template from the library.'],['Add your bumps','Schedule 3–7 follow-ups with fresh angles. AI can draft variations in your voice.'],['Watch replies land','Sequences self-manage: replies pause them, bookings end them, silence continues them.']],
+   faq:[['How many follow-ups should I send?','For most B2B outreach, 4–6 total touches across 2–3 weeks performs best. PlaseSent shows reply rates per step so you can trim what doesn\u2019t work.'],['Do follow-ups hurt deliverability?','Not when they are relevant and spaced sensibly. Volume limits, warmup and verification keep your sender reputation protected throughout.']] },
+ { slug:'sequencing', icon:'seq', name:'Campaign Sequencing', short:'Multi-step, multi-inbox campaigns with A/B tests.',
+   tag:'Sequences that scale across inboxes without chaos',
+   intro:'PlaseSent Sequencing spreads each campaign across all your inboxes with smart rotation and per-inbox daily limits, runs A/B tests on subjects and copy, and branches on behaviour — so volume grows while every inbox stays well inside safe limits.',
+   points:['Inbox rotation spreads volume evenly and safely across senders','Per-inbox daily caps and sending windows protect reputation','A/B test subject lines, openers and CTAs with automatic winner selection','Conditional branches: if they click, if they reply, if they book','Unified analytics across every inbox, step and variant'],
+   steps:[['Build the sequence','Add steps, delays, variants and conditions with a visual editor — no code.'],['Assign inboxes','Pick the sending pool; rotation and limits are applied automatically.'],['Launch and learn','Real-time stats highlight winning variants and steps to improve.']],
+   faq:[['How many inboxes can one campaign use?','As many as you connect. Rotation is automatic, and there is no per-inbox charge.'],['Can I test more than two variants?','Yes — test up to five variants per step, and PlaseSent shifts volume toward the winner as results come in.']] },
+ { slug:'deliverability', icon:'deliver', name:'Deliverability', short:'Inbox placement monitoring and domain protection.',
+   tag:'Know where your emails land — before it costs you',
+   intro:'Opens and replies only tell half the story. PlaseSent monitors SPF, DKIM and DMARC health, blacklist status, spam complaints and inbox placement across providers, then alerts you the moment something drifts — with the exact fix spelled out.',
+   points:['Continuous SPF, DKIM and DMARC monitoring with setup guidance','Blacklist checks across major lists for every sending domain','Spam complaint and bounce-rate alerts before providers react','Inbox placement tests across Gmail, Outlook and Yahoo','Domain and inbox health dashboard for your whole workspace'],
+   steps:[['Connect your domains','Add sending domains; we verify DNS records automatically.'],['We watch everything','Records, blacklists, complaint rates and placement are checked continuously.'],['Fix issues fast','Alerts arrive with plain-language explanations and the exact record or setting to change.']],
+   faq:[['What is a safe daily volume per inbox?','For cold outreach, 30–50 emails per inbox per day is a sensible ceiling. PlaseSent enforces your caps automatically.'],['Can you set up my DNS records?','We generate the exact SPF, DKIM and DMARC values and walk you through adding them; on annual plans our team can review your setup with you.']] }
+];
+
+const SOLUTIONS = [
+ { slug:'agencies', icon:'users', name:'For Agencies', tag:'Run outreach for every client from one workspace',
+   intro:'Separate workspaces per client, white-label reporting and pooled inboxes make PlaseSent the operating system for agency outbound — whether you manage three clients or thirty.',
+   points:['Unlimited client workspaces with separate lists, inboxes and billing views','White-label reports and dashboards your clients can open any time','Pooled sending infrastructure: share warmed inboxes across campaigns safely','Client-level permissions so account managers only see their accounts','Volume pricing that grows with you, not against you'] },
+ { slug:'founders', icon:'spark', name:'For Founders', tag:'Your first pipeline, without hiring an SDR team',
+   intro:'You are the product, the salesperson and the support desk. PlaseSent gives founders a repeatable way to reach first customers: find leads, write personal emails, follow up automatically, and learn what lands.',
+   points:['Start sending in an afternoon — templates and AI drafting included','Lead enrichment finds your first prospects from just company names','Follow-ups run themselves while you build the product','Clear analytics show which messages earn meetings','Founder-friendly pricing: pay for sends, not seats'] },
+ { slug:'freelancers', icon:'tool', name:'For Freelancers', tag:'A steady stream of clients, on a solo budget',
+   intro:'Feast-or-famine is a pipeline problem. A short daily routine with PlaseSent — warm inboxes, a verified niche list, a five-step sequence — keeps enquiries arriving while you do the paid work.',
+   points:['One inbox is enough to start; add more as enquiries grow','Niche lists built from enrichment, verified before sending','Personalised openers that reference a prospect\u2019s actual work','Break-up emails that quietly generate a surprising share of replies','Costs less than one hour of your billable time per month'] },
+ { slug:'enterprise', icon:'chart', name:'For Enterprise', tag:'Governance, security and scale for large outbound teams',
+   intro:'Multiple regions, brands and compliance requirements — without losing control. PlaseSent Enterprise adds SSO, audit trails, custom data retention and dedicated deliverability management on top of the full platform.',
+   points:['SSO/SAML, role-based access and full audit logs','Custom data retention and DPA to match your legal requirements','Dedicated deliverability manager and sending-infrastructure review','Regional workspaces with centralised suppression and compliance','Priority support with named account contact and SLA'] },
+ { slug:'sales', icon:'chart', name:'For Sales Teams', tag:'More meetings in the calendar, less time in the inbox',
+   intro:'Reps should be talking to prospects, not babysitting sequences. PlaseSent automates prospecting mechanics — warmup, follow-ups, routing — and surfaces the replies that deserve a human, ranked by intent.',
+   points:['Unified inbox ranks replies by buying intent automatically','Sequences pause and hand over the moment a prospect engages','CRM sync keeps HubSpot and Salesforce perfectly up to date','Team leaderboards and per-rep analytics for coaching','Shared templates keep messaging on-brand across the team'] },
+ { slug:'marketing', icon:'inbox', name:'For Marketing Teams', tag:'Outbound that supports the brand, not just the quota',
+   intro:'Cold outreach is a brand touchpoint too. Marketing teams use PlaseSent for event invitations, content promotion, partnership outreach and re-engagement — with deliverability discipline that protects the main domain.',
+   points:['Separate sending domains keep campaign mail away from your main domain','Brand-safe templates with approval workflows before launch','UTM and conversion tracking tie replies to pipeline and revenue','Re-engagement sequences wake up old leads without spamming them','Deliverability monitoring protects your sender reputation org-wide'] }
+];
+
+const PLANS = [
+ { name:'Starter', monthly:37, annual:29, who:'For solo senders and first campaigns',
+   feats:['5,000 emails / month','Unlimited inboxes & warmup','Email verification (1,000 credits)','Sequences & follow-ups','Unified inbox','Email support'] },
+ { name:'Growth', monthly:77, annual:61, who:'For teams scaling outbound that works', hot:true,
+   feats:['25,000 emails / month','Everything in Starter','AI personalization included','Enrichment (2,500 credits)','Automations & CRM sync','A/B testing & intent routing','Priority support'] },
+ { name:'Scale', monthly:147, annual:117, who:'For agencies and high-volume teams',
+   feats:['100,000 emails / month','Everything in Growth','Unlimited client workspaces','White-label reporting','API access & webhooks','Deliverability manager','SSO & audit logs'] }
+];
+
+const STORIES = [
+ { type:'Scenario · Lead generation agency', title:'The agency running six client campaigns at once',
+   body:'A mid-size lead-gen agency keeps each client in its own workspace: separate lists, separate sending domains, one shared pool of warmed inboxes. Per-inbox caps and rotation run automatically, clients watch live white-label dashboards instead of asking for screenshots, and account managers spend their time on copy and strategy instead of deliverability firefighting.',
+   watch:'What to watch: per-client bounce rates and inbox health, checked weekly.' },
+ { type:'Scenario · B2B SaaS founder', title:'The founder who is also the sales team',
+   body:'A seed-stage founder sends in short daily batches between product work. Enrichment builds the prospect list from company names, AI openers reference each prospect\u2019s actual context, and a five-step sequence follows up on its own. Replies pause the sequence and land in one inbox, so the only manual job left is answering people who raised a hand.',
+   watch:'What to watch: reply rate by sequence step — trim the steps that earn nothing.' },
+ { type:'Scenario · Enterprise sales team', title:'The regulated team that needed compliance first',
+   body:'A financial-services sales org starts with governance: SSO, role-based access, audit logs and a central suppression list across regions. Placement tests run before every launch, DNS monitoring watches every sending domain, and legal gets the paper trail it asked for — while reps get a pipeline channel they fully control.',
+   watch:'What to watch: placement-test results before each new campaign or domain.' },
+ { type:'Scenario · Solo freelancer', title:'The freelancer replacing job boards with outreach',
+   body:'A brand designer sends a small, steady batch each week to studios they genuinely want to work with — forty emails, five steps, one niche list, verified before sending. The polite break-up email at the end of the sequence does a surprising share of the work, and the whole routine costs less than an hour a week to run.',
+   watch:'What to watch: keep the list small and relevant; relevance is the whole strategy.' }
+];
+
+const POSTS = [
+ { slug:'cold-email-deliverability-guide', title:'Cold Email Deliverability: The Complete 2026 Guide', cat:'Deliverability', mins:9, color:'#5b7cff',
+   excerpt:'Why good emails land in spam, and the exact technical and behavioural fixes that get them back into the inbox.',
+   body:[
+    ['p','Deliverability is not one setting — it is the sum of your domain setup, your sending behaviour and your list quality. When any one of the three slips, inbox providers quietly move you to spam, and your reply rates fall off a cliff.'],
+    ['h2','Start with authentication'],
+    ['p','SPF, DKIM and DMARC tell receiving servers that your emails really come from you. Without all three correctly published, you are asking Gmail and Outlook to trust an unsigned letter. Set them up on a dedicated sending subdomain (for example, outreach.yourdomain.com) so cold campaigns can never damage your main domain\u2019s reputation.'],
+    ['h2','Warm up, then stay warm'],
+    ['p','A new inbox that suddenly sends 200 cold emails looks exactly like a compromised account. Warmup builds a history of opened, replied-to mail first. Keep warmup running even after you start campaigns — reputation decays when engagement stops.'],
+    ['h2','Volume discipline beats volume'],
+    ['ul',['Keep each inbox at 30–50 cold emails per day','Spread campaigns across several inboxes instead of pushing one harder','Ramp new inboxes over 2–3 weeks, not overnight','Pause any inbox whose bounce rate crosses 2% and investigate']],
+    ['h2','Your list is a deliverability feature'],
+    ['p','Hard bounces are the fastest way to destroy a domain. Verify every address before it enters a sequence, remove role-based and catch-all addresses from your first sends, and honour unsubscribes instantly and globally.'],
+    ['h2','Test placement, don\u2019t guess'],
+    ['p','Send placement tests to seed inboxes across Gmail, Outlook and Yahoo before big launches. If the test lands in spam, fix the cause — usually authentication, a flagged link domain, or copy stuffed with trigger phrases — before real prospects see it.'],
+    ['p','Deliverability rewards boring consistency: authenticated domains, warmed inboxes, verified lists and steady volume. Do those four things and the inbox becomes the default, not the exception.']] },
+ { slug:'follow-up-email-templates', title:'7 Follow-Up Emails That Actually Get Replies', cat:'Sequences', mins:7, color:'#6c6cff',
+   excerpt:'Most replies arrive after the first email. Here are the follow-up angles that earn them — without sounding desperate.',
+   body:[
+    ['p','Across millions of B2B emails, the pattern is consistent: the first email starts the conversation, but follow-ups close it. Prospects are busy, not uninterested. A good follow-up gives them a new reason to reply each time — it never just says "bumping this up".'],
+    ['h2','1. The value bump (day 3)'],
+    ['p','Add something useful: a relevant case study, a short teardown, a data point about their market. You are not reminding them you exist; you are giving them a reason to care that you do.'],
+    ['h2','2. The question bump (day 6)'],
+    ['p','One short, specific question is easier to answer than an open-ended pitch. "Who looks after outbound at your end?" outperforms another paragraph about your product.'],
+    ['h2','3. The social proof bump (day 10)'],
+    ['p','Name a comparable company and the outcome they got — briefly, and only if it is true. Specific beats superlative: "helped a 14-person agency book 31 meetings in a quarter" beats "we help companies grow".'],
+    ['h2','4. The resource bump (day 14)'],
+    ['p','Share a guide, calculator or template with no strings. Generosity is memorable, and prospects often reply weeks later when the need becomes urgent.'],
+    ['h2','5–7. Short, shorter, break-up'],
+    ['ul',['Day 18: a two-line nudge referencing your original point','Day 22: a light either/or question — "worth a look, or should I close the loop?"','Day 26: the break-up. Polite, final, and consistently one of the highest-replying emails in any sequence']],
+    ['p','Whatever the angle, keep every follow-up in the same thread, stop the moment they reply, and never send more than one per day. Persistence reads as professional; pressure reads as spam.']] },
+ { slug:'ai-personalization-cold-email', title:'AI Personalization in Cold Email: What Works, What Backfires', cat:'Personalization', mins:6, color:'#ff9e00',
+   excerpt:'AI can write a unique opener for every prospect. Used well it lifts replies; used lazily it screams automation. Here is the line.',
+   body:[
+    ['p','Everyone can spot a mail-merge. "{{FirstName}}, I noticed {{Company}} is growing fast" fools no one, and prospects have learned to delete it on sight. Real personalization references something specific and true — and that is exactly where AI, grounded in real data, earns its keep.'],
+    ['h2','What works: specific, true, relevant'],
+    ['ul',['A comment on a post the prospect actually wrote','A hiring signal that connects to your offer','A tool they use that you integrate with or replace','A funding round, launch or expansion reported publicly']],
+    ['p','Each of these proves a human (or a well-fed model) did thirty seconds of research. The opener earns attention; the rest of the email still has to earn the meeting.'],
+    ['h2','What backfires'],
+    ['p','Invented details are fatal. The moment an AI hallucinates an award, a post or a mutual connection, trust is gone — and it should be. Only generate lines from verified signals, skip the line entirely when there is no signal, and review a sample of every batch before it sends.'],
+    ['h2','The workflow that scales'],
+    ['p','Enrich the list first, generate openers second, human-review a sample third, and let the sequence handle the rest. Teams that follow that order see personalization lift replies meaningfully; teams that skip the review step eventually send something embarrassing at scale.'],
+    ['p','AI personalization is not about writing emails for you. It is about doing the research step — the one nobody had time for — on every single prospect.']] }
+];
+
+const HOME_FAQ = [
+ ['Is PlaseSent hard to set up?','No. Connect your inboxes, add your sending domains, and PlaseSent generates the DNS records and starts warmup automatically. Most people send their first campaign the same day — though new inboxes should warm up for 2–3 weeks before heavy volume.'],
+ ['How many inboxes can I connect?','Unlimited, on every plan. There is no per-inbox or per-seat fee — you pay for sending volume, so adding warmed inboxes to protect deliverability never raises your bill.'],
+ ['Will cold email hurt my main domain?','Not if you follow the setup PlaseSent walks you through: send from a dedicated subdomain, authenticate with SPF, DKIM and DMARC, verify your lists, and respect per-inbox daily limits. Your main domain never sends campaign mail.'],
+ ['Can I import leads from my CRM or another tool?','Yes. Import by CSV, sync two-way with HubSpot, Salesforce, Pipedrive and Zoho, or push leads in through the API and webhooks. Duplicates and suppressed addresses are filtered automatically.'],
+ ['What happens if a prospect replies?','Their sequence pauses instantly, the reply lands in your unified inbox ranked by intent, and any automations you set — routing, tagging, CRM sync, Slack alerts — fire right away.'],
+ ['Do you offer a free trial?','Every plan starts with 14 days free, including warmup and 250 verification credits, with no card required.']
+];
+</script>
+<script>
+"use strict";
+const $ = s => document.querySelector(s);
+const app = $('#app');
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),2600); }
+
+/* ---------- nav ---------- */
+const PRODUCT_LINKS = FEATURES.map(f=>({href:'#/features/'+f.slug, icon:f.icon, name:f.name, desc:f.short}))
+  .concat([
+    {href:'#/placement-test', icon:'test', name:'Placement Test', desc:'See where your emails land before you send.'},
+    {href:'#/api', icon:'api', name:'API & Integrations', desc:'Connect PlaseSent to the rest of your stack.'},
+    {href:'#/mobile-app', icon:'phone', name:'Mobile App', desc:'Replies and campaign stats in your pocket.'},
+    {href:'#/white-label', icon:'label', name:'White-label', desc:'Your brand on the client-facing experience.'}
+  ]);
+const SOLUTION_LINKS = SOLUTIONS.map(s=>({href:'#/solutions/'+s.slug, icon:s.icon, name:s.name.replace('For ','') , desc:s.tag}));
+const RESOURCE_LINKS = [
+  {href:'#/tools', icon:'tool', name:'Free Tools', desc:'Subject line checker, spam-word scan and more.'},
+  {href:'#/blog', icon:'book', name:'Blog', desc:'Guides on deliverability, sequences and growth.'},
+  {href:'#/stories', icon:'users', name:'Customer Stories', desc:'How teams book more meetings with PlaseSent.'},
+  {href:'#/pricing', icon:'chart', name:'Pricing', desc:'Plans that scale with your sending volume.'}
+];
+function dropHTML(items){ return items.map(i=>'<a href="'+i.href+'"><span class="dic">'+icon(i.icon,16)+'</span><span><b>'+i.name+'</b><span>'+i.desc+'</span></span></a>').join(''); }
+$('#drop-product').innerHTML = dropHTML(PRODUCT_LINKS);
+$('#drop-solutions').innerHTML = dropHTML(SOLUTION_LINKS);
+$('#drop-resources').innerHTML = dropHTML(RESOURCE_LINKS);
+$('#foot-product').innerHTML = PRODUCT_LINKS.slice(0,9).map(i=>'<li><a class="foot-link" href="'+i.href+'">'+i.name+'</a></li>').join('');
+$('#foot-solutions').innerHTML = SOLUTION_LINKS.map(i=>'<li><a class="foot-link" href="'+i.href+'">'+i.name+'</a></li>').join('');
+$('#foot-resources').innerHTML = RESOURCE_LINKS.map(i=>'<li><a class="foot-link" href="'+i.href+'">'+i.name+'</a></li>').join('')
+  + '<li><a class="foot-link" href="#/placement-test">Placement Test</a></li><li><a class="foot-link" href="#/white-label">White-label</a></li>';
+$('#mobileMenu').innerHTML =
+  '<div class="mm-group"><p>Product</p>'+PRODUCT_LINKS.map(i=>'<a href="'+i.href+'">'+i.name+'</a>').join('')+'</div>'
+  +'<div class="mm-group"><p>Solutions</p>'+SOLUTION_LINKS.map(i=>'<a href="'+i.href+'">'+i.name+'</a>').join('')+'</div>'
+  +'<div class="mm-group"><p>More</p><a href="#/pricing">Pricing</a><a href="#/stories">Customer stories</a><a href="#/tools">Free tools</a><a href="#/blog">Blog</a><a href="#/get-started">Start free</a></div>';
+$('#burger').addEventListener('click', ()=> $('#mobileMenu').classList.toggle('open'));
+document.querySelectorAll('[data-drop]').forEach(item=>{
+  const btn=item.querySelector('.nav-link');
+  btn.addEventListener('click', e=>{ e.stopPropagation(); const was=item.classList.contains('open'); document.querySelectorAll('[data-drop]').forEach(d=>d.classList.remove('open')); if(!was) item.classList.add('open'); });
+});
+document.addEventListener('click', ()=> document.querySelectorAll('[data-drop]').forEach(d=>d.classList.remove('open')));
+
+/* ---------- shared blocks ---------- */
+function faqHTML(faqs){ return '<div class="faq">'+faqs.map(f=>'<details><summary>'+f[0]+'</summary><div class="ans">'+f[1]+'</div></details>').join('')+'</div>'; }
+function ctaBand(title, sub){
+  return '<section class="block tight"><div class="wrap"><div class="cta-band"><h2>'+(title||'Ready to land in the inbox?')+'</h2><p>'+(sub||'Start free for 14 days. Unlimited inboxes, warmup included, no card required.')+'</p><a class="btn btn-lime btn-lg" href="#/get-started">Start sending free</a></div></div></section>';
+}
+function pageHero(crumb, kicker, title, sub, ctas){
+  return '<div class="wrap page-hero"><div class="crumb">'+crumb+'</div><span class="mono kicker">'+kicker+'</span><h1>'+title+'</h1><p class="sub">'+sub+'</p>'
+    +(ctas?'<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">'+ctas+'</div>':'')+'</div>';
+}
+const CTA_START = '<a class="btn btn-brand btn-lg" href="#/get-started">Start free</a><a class="btn btn-ghost btn-lg" href="#/pricing">See pricing</a>';
+
+/* ---------- HOME ---------- */
+function homePage(){
+  const featCards = FEATURES.map(f=>'<a class="card" href="#/features/'+f.slug+'"><span class="ic">'+icon(f.icon,21)+'</span><h3>'+f.name+'</h3><p>'+f.short+'</p><span class="go">Explore →</span></a>').join('');
+  return ''
+  + '<section class="hero"><div class="wrap"><div class="hero-grid"><div>'
+  + '<span class="pill"><i></i>New: AI personalization 2.0 is live</span>'
+  + '<h1>Cold email that lands in the <span class="hl">inbox</span> — and gets replies</h1>'
+  + '<p class="sub">PlaseSent warms your inboxes, verifies every lead, personalises every email and follows up automatically, so your outreach books meetings instead of landing in spam.</p>'
+  + '<div class="hero-ctas"><a class="btn btn-lime btn-lg" href="#/get-started">Start free — no card needed</a><a class="btn btn-lg" href="#/pricing" style="background:#ffffff;color:var(--ink);border:1px solid var(--line2)">See plans</a></div>'
+  + '<div class="hero-note"><span>'+icon('check',14)+' 14-day free trial</span><span>'+icon('check',14)+' Unlimited inboxes</span><span>'+icon('check',14)+' Cancel anytime</span></div>'
+  + '</div><div class="mock" aria-hidden="true"><div class="mock-top"><i></i><i></i><i></i><span style="margin-left:8px">app.plasesent.com</span><span class="tag tag-a" style="margin-left:auto">Sample data</span></div><div class="mock-body">'
+  + '<div class="mock-side"><a class="on">Campaigns</a><a>Inbox</a><a>Leads</a><a>Warmup</a><a>Analytics</a><a>Settings</a></div>'
+  + '<div class="mock-main"><div class="mock-stats"><div class="mstat"><b>38.4%</b><span>Open rate</span></div><div class="mstat"><b>6.2%</b><span>Reply rate</span></div><div class="mstat"><b>24</b><span>Replies today</span></div></div>'
+  + '<div class="bars"><i style="height:35%"></i><i style="height:48%"></i><i style="height:42%"></i><i style="height:60%"></i><i style="height:55%"></i><i style="height:72%"></i><i style="height:66%"></i><i style="height:84%"></i><i style="height:78%"></i><i style="height:95%"></i></div>'
+  + '<div style="margin-top:14px"><div class="mrow"><span>Q3 agency outreach</span><span class="tag tag-g">Replied · 24</span></div><div class="mrow"><span>Founder pipeline — SaaS</span><span class="tag tag-l">Meeting booked</span></div><div class="mrow"><span>Re-engagement · old leads</span><span class="tag tag-a">Step 3 sending</span></div><div class="mrow"><span>Inbox health — 12 inboxes</span><span class="tag tag-g">All healthy</span></div></div>'
+  + '</div></div></div></div>'
+  + '<div style="padding:26px 0 30px;color:var(--hero-muted);font-size:.9rem">Made for outbound teams at agencies, SaaS startups and sales organisations</div>'
+  + '</div></section>'
+
+  + '<section class="block"><div class="wrap"><div class="sec-head"><span class="mono kicker">Everything in one workspace</span><h2>The full outreach stack, without the duct tape</h2><p>Most teams stitch together five tools to send one campaign. PlaseSent replaces the stack — and every piece is built to protect your deliverability.</p></div>'
+  + '<div class="grid3">'+featCards+'</div></div></section>'
+
+  + '<section class="block band"><div class="wrap"><div class="split"><div><span class="mono kicker">Deliverability first</span><h2 style="font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800">Built so you never wonder where your emails went</h2><p style="color:var(--muted);margin-top:14px">Spam folders don\u2019t send notifications. PlaseSent watches the signals that decide placement — authentication, blacklists, complaints, bounces — and tells you what to fix before a campaign pays the price.</p><div style="margin-top:22px"><a class="btn btn-brand" href="#/features/deliverability">How deliverability works</a></div></div>'
+  + '<div class="grid2" style="gap:14px"><div class="card"><span class="mono" style="color:var(--brand)">SPF · DKIM · DMARC</span><h3>Authentication monitoring</h3><p>Records checked continuously; alerts the moment one breaks.</p></div><div class="card"><span class="mono" style="color:var(--brand)">Placement tests</span><h3>Know before you send</h3><p>Seed tests across Gmail, Outlook and Yahoo before every big launch.</p></div><div class="card"><span class="mono" style="color:var(--brand)">Smart limits</span><h3>Volume that stays safe</h3><p>Per-inbox caps and rotation keep every sender inside healthy ranges.</p></div><div class="card"><span class="mono" style="color:var(--brand)">Blacklist watch</span><h3>Early warning system</h3><p>Your domains checked against major blacklists around the clock.</p></div></div></div>'
+  + '<div class="stats-row" style="margin-top:52px"><div class="stat"><b>3</b><span>authentication records — SPF, DKIM & DMARC — monitored on every domain</span></div><div class="stat"><b>30–50</b><span>safe daily sends per inbox, enforced automatically</span></div><div class="stat"><b>&lt;2%</b><span>bounce rate target, guarded by built-in verification</span></div><div class="stat"><b>24/7</b><span>DNS, blacklist and complaint monitoring</span></div></div>'
+  + '</div></section>'
+
+  + '<section class="block"><div class="wrap"><div class="sec-head center"><span class="mono kicker">How it works</span><h2>From signup to first replies in three steps</h2></div>'
+  + '<div class="steps"><div class="step"><span class="num">Step 01</span><h3>Connect & warm up</h3><p>Add your inboxes and sending domains. PlaseSent sets up authentication guidance and starts warmup automatically.</p></div>'
+  + '<div class="step"><span class="num">Step 02</span><h3>Add leads, we clean them</h3><p>Import or enrich your list. Verification removes the addresses that would bounce, and AI drafts a personal opener for each prospect.</p></div>'
+  + '<div class="step"><span class="num">Step 03</span><h3>Launch the sequence</h3><p>Follow-ups send themselves, replies pause the sequence and land in your unified inbox, ranked by intent and routed to your team.</p></div></div></div></section>'
+
+  + '<section class="block band"><div class="wrap"><div class="sec-head"><span class="mono kicker">Example stories</span><h2>How teams put PlaseSent to work</h2><p>Illustrative scenarios based on typical PlaseSent workflows — the patterns real outbound teams follow, from first warmup to booked meetings.</p></div><div class="grid2">'
+  + STORIES.slice(0,2).map(s=>'<div class="story"><span class="mono" style="color:var(--brand)">'+s.type+'</span><h3 style="font-size:1.2rem;margin:10px 0 8px">'+s.title+'</h3><p class="quote">'+s.body+'</p><p style="color:var(--muted);font-size:.9rem;margin-top:12px">'+s.watch+'</p></div>').join('')
+  + '</div><div style="margin-top:22px"><a class="btn btn-ghost" href="#/stories">Read all stories →</a></div></div></section>'
+
+  + pricingSection(false)
+  + '<section class="block"><div class="wrap"><div class="sec-head center"><span class="mono kicker">FAQ</span><h2>Questions, answered</h2></div>'+faqHTML(HOME_FAQ)+'</div></section>'
+  + ctaBand();
+}
+
+/* ---------- PRICING ---------- */
+let annual = true;
+function pricingSection(withFaq){
+  const cards = PLANS.map(p=>{
+    const price = annual ? p.annual : p.monthly;
+    return '<div class="plan'+(p.hot?' hot':'')+'">'+(p.hot?'<span class="flag">Most popular</span>':'')
+    + '<h3>'+p.name+'</h3><p class="who">'+p.who+'</p>'
+    + '<div class="price">$'+price+'<small> /mo</small></div><p class="per">'+(annual?'Billed annually':'Billed monthly')+' · unlimited inboxes & seats</p>'
+    + '<ul>'+p.feats.map(f=>'<li>'+CHECK+'<span>'+f+'</span></li>').join('')+'</ul>'
+    + '<a class="btn '+(p.hot?'btn-brand':'btn-ghost')+'" href="#/get-started?plan='+p.name.toLowerCase()+'">Start 14-day free trial</a></div>';
+  }).join('');
+  return '<section class="block" id="pricingBlock"><div class="wrap"><div class="sec-head center"><span class="mono kicker">Pricing</span><h2>Pay for sends, not seats or inboxes</h2><p>Every plan includes unlimited inboxes, unlimited warmup and unlimited teammates. You only scale on the volume you actually send.</p>'
+  + '<div style="margin-top:22px"><span class="toggle" role="group" aria-label="Billing period"><button id="billMonthly" class="'+(annual?'':'on')+'">Monthly</button><button id="billAnnual" class="'+(annual?'on':'')+'">Annual <span class="save">−20%</span></button></span></div></div>'
+  + '<div class="price-grid">'+cards+'</div>'
+  + '<p style="text-align:center;color:var(--muted);margin-top:22px;font-size:.93rem">Need more volume, or a custom enterprise setup? <a href="#/solutions/enterprise" style="font-weight:700">Talk to us about Enterprise →</a></p>'
+  + (withFaq ? '<div style="margin-top:64px"><div class="sec-head center"><h2>Pricing questions</h2></div>'+faqHTML([
+      ['What counts as one email?','Every sent email counts once, including follow-ups in a sequence. Opens, replies and warmup mail never count against your quota.'],
+      ['What happens if I exceed my monthly volume?','Campaigns pause gracefully — nothing sends beyond your plan without warning. You can upgrade mid-cycle and only pay the prorated difference.'],
+      ['Are verification and enrichment credits separate?','Plans include monthly credits. Extra credits are available in packs and never expire while your subscription is active.'],
+      ['Can I cancel anytime?','Yes. Plans are month-to-month or annual with no lock-in beyond the period you paid for, and you can export all your data before you go.']
+    ])+'</div>' : '')
+  + '</div></section>';
+}
+function bindPricingToggle(){
+  const m=$('#billMonthly'), a=$('#billAnnual');
+  if(!m||!a) return;
+  m.addEventListener('click', ()=>{ annual=false; rerender(); });
+  a.addEventListener('click', ()=>{ annual=true; rerender(); });
+}
+
+/* ---------- FEATURE PAGE ---------- */
+function featurePage(f){
+  return pageHero('<a href="#/">Home</a> / Product / '+f.name, 'Product · '+f.name, f.tag, f.intro, CTA_START)
+  + '<section class="block"><div class="wrap"><div class="split"><div><h2 style="font-size:1.7rem;font-weight:800;margin-bottom:18px">What '+f.name+' does for you</h2><ul class="check-list">'+f.points.map(p=>'<li>'+CHECK+'<span>'+p+'</span></li>').join('')+'</ul></div>'
+  + '<div class="panel"><span class="mono" style="color:var(--brand)">Included on every plan</span><h3 style="margin:12px 0 8px;font-size:1.25rem">'+f.name+' + the full PlaseSent stack</h3><p style="color:var(--muted)">'+f.name+' works best together with warmup, verification and sequencing — and in PlaseSent they all live in the same workspace, sharing the same lead data and the same safety limits.</p><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px"><a class="btn btn-brand" href="#/get-started">Try it free</a><a class="btn btn-ghost" href="#/pricing">See plans</a></div></div></div></div></section>'
+  + '<section class="block band"><div class="wrap"><div class="sec-head"><span class="mono kicker">How it works</span><h2>Up and running in three steps</h2></div><div class="steps">'+f.steps.map((s,i)=>'<div class="step"><span class="num">Step 0'+(i+1)+'</span><h3>'+s[0]+'</h3><p>'+s[1]+'</p></div>').join('')+'</div></div></section>'
+  + '<section class="block"><div class="wrap"><div class="sec-head"><span class="mono kicker">Keep exploring</span><h2>Related features</h2></div><div class="grid3">'
+  + FEATURES.filter(x=>x.slug!==f.slug).slice(0,3).map(x=>'<a class="card" href="#/features/'+x.slug+'"><span class="ic">'+icon(x.icon,21)+'</span><h3>'+x.name+'</h3><p>'+x.short+'</p><span class="go">Explore →</span></a>').join('')
+  + '</div></div></section>'
+  + '<section class="block tight"><div class="wrap"><div class="sec-head center"><span class="mono kicker">FAQ</span><h2>'+f.name+' questions</h2></div>'+faqHTML(f.faq)+'</div></section>'
+  + ctaBand('Try '+f.name+' free for 14 days');
+}
+
+/* ---------- SOLUTION PAGE ---------- */
+function solutionPage(s){
+  return pageHero('<a href="#/">Home</a> / Solutions / '+s.name.replace('For ',''), 'Solutions', s.tag, s.intro, CTA_START)
+  + '<section class="block"><div class="wrap"><div class="split"><div><h2 style="font-size:1.7rem;font-weight:800;margin-bottom:18px">Why teams choose PlaseSent</h2><ul class="check-list">'+s.points.map(p=>'<li>'+CHECK+'<span>'+p+'</span></li>').join('')+'</ul></div>'
+  + '<div class="panel"><span class="mono" style="color:var(--brand)">Start today</span><h3 style="margin:12px 0 8px;font-size:1.25rem">Your first campaign this week</h3><p style="color:var(--muted)">Connect inboxes, import a list you already have, and launch a warmed, verified sequence — with AI personalization doing the research step for every prospect.</p><div style="margin-top:20px"><a class="btn btn-brand" href="#/get-started">Start free</a></div></div></div></div></section>'
+  + '<section class="block band"><div class="wrap"><div class="sec-head"><span class="mono kicker">Everything included</span><h2>The tools that come with it</h2></div><div class="grid3">'
+  + FEATURES.slice(0,6).map(f=>'<a class="card" href="#/features/'+f.slug+'"><span class="ic">'+icon(f.icon,21)+'</span><h3>'+f.name+'</h3><p>'+f.short+'</p><span class="go">Explore →</span></a>').join('')
+  + '</div></div></section>'
+  + '<section class="block"><div class="wrap"><div class="sec-head"><span class="mono kicker">Other solutions</span><h2>PlaseSent for…</h2></div><div class="seg-ctl">'
+  + SOLUTIONS.filter(x=>x.slug!==s.slug).map(x=>'<button onclick="location.hash=\'#/solutions/'+x.slug+'\'">'+x.name+'</button>').join('')
+  + '</div></div></section>'
+  + ctaBand();
+}
+
+/* ---------- STORIES ---------- */
+function storiesPage(){
+  return pageHero('<a href="#/">Home</a> / Customer stories', 'Example stories', 'How outbound teams use PlaseSent, scenario by scenario', 'Illustrative scenarios based on typical PlaseSent workflows — an agency running client campaigns, a founder building first pipeline, an enterprise team rolling out with compliance, and a freelancer keeping enquiries steady.', CTA_START)
+  + '<section class="block"><div class="wrap"><div class="grid2">'
+  + STORIES.map(s=>'<div class="story"><span class="mono" style="color:var(--brand)">'+s.type+'</span><h3 style="font-size:1.25rem;margin:10px 0 8px">'+s.title+'</h3><p class="quote">'+s.body+'</p><p style="color:var(--muted);font-size:.9rem;margin-top:12px">'+s.watch+'</p></div>').join('')
+  + '</div></div></section>' + ctaBand('Your story could be next','Start free for 14 days and run your first warmed, verified campaign this week.');
+}
+
+/* ---------- PLACEMENT TEST ---------- */
+function placementPage(){
+  return pageHero('<a href="#/">Home</a> / Product / Placement Test', 'Placement Test', 'See where your emails land — before your prospects do', 'Send a test campaign to PlaseSent seed inboxes across Gmail, Outlook and Yahoo, and get a clear placement report: inbox, promotions or spam, per provider, with the likely cause and the fix.', CTA_START)
+  + '<section class="block"><div class="wrap"><div class="steps">'
+  + '<div class="step"><span class="num">Step 01</span><h3>Create a test</h3><p>Pick the exact email — subject, copy, links — that your campaign will send. Tests use your real sending inbox and domain.</p></div>'
+  + '<div class="step"><span class="num">Step 02</span><h3>We check every folder</h3><p>Seed inboxes across the major providers report back where the message landed and how it was treated.</p></div>'
+  + '<div class="step"><span class="num">Step 03</span><h3>Fix, then launch</h3><p>Your report flags authentication gaps, risky links and spam-trigger wording, with the specific change to make.</p></div></div>'
+  + '<div class="split" style="margin-top:52px"><div><h2 style="font-size:1.7rem;font-weight:800;margin-bottom:16px">What the report covers</h2><ul class="check-list"><li>'+CHECK+'<span>Placement per provider: primary inbox, promotions, or spam</span></li><li>'+CHECK+'<span>SPF, DKIM and DMARC pass/fail for the test message</span></li><li>'+CHECK+'<span>Link and tracking-domain reputation check</span></li><li>'+CHECK+'<span>Spam-trigger phrase highlighting in your copy</span></li><li>'+CHECK+'<span>Comparison against your previous tests, so fixes are measurable</span></li></ul></div>'
+  + '<div class="panel"><span class="mono" style="color:var(--brand)">Try the free checker</span><h3 style="margin:12px 0 6px;font-size:1.2rem">Quick copy scan</h3><p style="color:var(--muted);font-size:.94rem">Paste a draft email below for an instant spam-phrase and formatting scan — a small taste of the full placement test.</p>'
+  + '<label class="f" for="scanText">Your email draft</label><textarea id="scanText" rows="6" placeholder="Subject: Quick question&#10;&#10;Hi Sarah, noticed your team is hiring SDRs…"></textarea>'
+  + '<button class="btn btn-brand" id="scanBtn" style="margin-top:14px">Scan this email</button><div id="scanOut"></div></div></div></div></section>'
+  + ctaBand('Run a full placement test free','Seed inboxes across Gmail, Outlook and Yahoo are included in every trial.');
+}
+const SPAM_WORDS = ['free money','guaranteed','act now','limited time offer','click here','buy now','no risk','risk-free','winner','congratulations','urgent','earn extra cash','make money fast','100% free','double your','casino','viagra','loan','credit card debt','order now','special promotion','dear friend','you have been selected','claim now','cash bonus','work from home','income','discount!!!'];
+function bindScan(){
+  const btn=$('#scanBtn'); if(!btn) return;
+  btn.addEventListener('click', ()=>{
+    const txt=($('#scanText').value||'').toLowerCase();
+    const out=$('#scanOut');
+    if(txt.trim().length<20){ out.innerHTML='<div class="tool-out">Paste a little more of your email so the scan has something to work with.</div>'; return; }
+    const hits=SPAM_WORDS.filter(w=>txt.includes(w));
+    const caps=(($('#scanText').value||'').match(/[A-Z]{4,}/g)||[]).length;
+    const bangs=(($('#scanText').value||'').match(/!/g)||[]).length;
+    const links=(($('#scanText').value||'').match(/https?:\/\//g)||[]).length;
+    let score=100 - hits.length*9 - Math.max(0,caps-1)*6 - Math.max(0,bangs-2)*3 - Math.max(0,links-2)*5;
+    score=Math.max(5,Math.min(100,score));
+    let notes=[];
+    if(hits.length) notes.push('Spam-trigger phrases found: <b>'+hits.join(', ')+'</b> — consider softer wording.');
+    if(caps>1) notes.push('Several ALL-CAPS words — they read as shouting to filters and people.');
+    if(bangs>2) notes.push(bangs+' exclamation marks — one is plenty.');
+    if(links>2) notes.push(links+' links is a lot for a first cold email; one clear CTA link is safer.');
+    if(!notes.length) notes.push('No common trigger phrases or formatting red flags found. Nice and clean.');
+    out.innerHTML='<div class="tool-out"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>Copy health score</b><span class="calc-out" style="font-size:1.5rem">'+score+'/100</span></div><div class="scorebar"><i style="width:'+score+'%"></i></div><p style="margin-top:12px;color:var(--ink2)">'+notes.join(' ')+'</p><p style="margin-top:8px;color:var(--muted);font-size:.88rem">This is a copy-only scan. A full placement test also checks authentication, domain reputation and real seed inboxes.</p></div>';
+  });
+}
+
+/* ---------- API ---------- */
+function apiPage(){
+  return pageHero('<a href="#/">Home</a> / Product / API & Integrations', 'API & Integrations', 'Plug PlaseSent into the stack you already run', 'A clean REST API, real-time webhooks and native two-way sync with the major CRMs — so leads, replies and outcomes flow where your team already works.', CTA_START)
+  + '<section class="block"><div class="wrap"><div class="grid3">'
+  + [['CRM sync','Two-way sync with HubSpot, Salesforce, Pipedrive and Zoho: leads in, replies and outcomes back, field-mapped your way.','users'],
+     ['REST API','Manage leads, campaigns, inboxes and suppressions programmatically. Versioned endpoints, sane rate limits, full reference docs.','api'],
+     ['Webhooks','Real-time events for replies, bounces, unsubscribes, meetings and placement alerts — signed payloads, automatic retries.','auto'],
+     ['Zapier & Make','Connect thousands of apps without code: add leads from forms, log replies to sheets, ping Slack on hot replies.','seq'],
+     ['Custom tracking domains','Brand your tracking and unsubscribe links with your own domains, SSL included, for better trust and placement.','label'],
+     ['Data export','Everything is yours: export leads, campaign stats and reply history any time, in full, no hostage situations.','chart']]
+    .map(c=>'<div class="card"><span class="ic">'+icon(c[2],21)+'</span><h3>'+c[0]+'</h3><p>'+c[1]+'</p></div>').join('')
+  + '</div>'
+  + '<div class="panel" style="margin-top:26px"><span class="mono" style="color:var(--brand)">Example · Add a lead</span><pre style="overflow-x:auto;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:16px;font-size:.85rem;margin:14px 0 0"><code>POST https://api.plasesent.com/v1/leads\nAuthorization: Bearer YOUR_API_KEY\n\n{\n  "email": "sarah@northbeam.io",\n  "first_name": "Sarah",\n  "company": "Northbeam Studio",\n  "list": "Agency outreach — Q3"\n}</code></pre></div>'
+  + '</div></section>' + ctaBand('Build on PlaseSent','API access is included on the Scale plan, with sandbox keys in every trial.');
+}
+
+/* ---------- MOBILE APP ---------- */
+function mobilePage(){
+  return pageHero('<a href="#/">Home</a> / Product / Mobile App', 'Mobile App', 'Your pipeline in your pocket', 'Replies don\u2019t wait for you to get back to your desk. The PlaseSent app for iOS and Android puts the unified inbox, campaign stats and inbox health in your hand.', CTA_START)
+  + '<section class="block"><div class="wrap"><div class="split"><div><h2 style="font-size:1.7rem;font-weight:800;margin-bottom:16px">Never miss a hot reply</h2><ul class="check-list"><li>'+CHECK+'<span>Push notifications the moment a positive reply lands</span></li><li>'+CHECK+'<span>Reply, snooze or assign conversations from your phone</span></li><li>'+CHECK+'<span>Campaign dashboards: opens, replies, meetings — live</span></li><li>'+CHECK+'<span>Inbox health alerts if a domain or inbox needs attention</span></li><li>'+CHECK+'<span>Pause any campaign instantly, from anywhere</span></li></ul><div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px"><button class="btn btn-brand" onclick="toast(\'The iOS app link would open the App Store on the live site.\')">Download for iOS</button><button class="btn btn-ghost" onclick="toast(\'The Android app link would open Google Play on the live site.\')">Download for Android</button></div></div>'
+  + '<div class="panel" style="max-width:320px;margin:0 auto;width:100%"><div class="mock" style="border-radius:14px"><div class="mock-top"><i></i><i></i><i></i><span style="margin-left:8px">PlaseSent</span><span class="tag tag-a" style="margin-left:auto">Sample data</span></div><div class="mock-main"><div class="mrow"><span>Positive reply — Craftline</span><span class="tag tag-g">Hot</span></div><div class="mrow"><span>Meeting booked — Harbor</span><span class="tag tag-l">Booked</span></div><div class="mrow"><span>Campaign: Agency Q3</span><span class="tag tag-g">6.2% replies</span></div><div class="mrow"><span>Inbox health</span><span class="tag tag-g">12 / 12 healthy</span></div><div class="mrow"><span>Follow-ups due today</span><span class="tag tag-a">Sending</span></div></div></div></div></div></div></section>'
+  + ctaBand();
+}
+
+/* ---------- WHITE LABEL ---------- */
+function whiteLabelPage(){
+  return pageHero('<a href="#/">Home</a> / Product / White-label', 'White-label', 'PlaseSent power, your brand on the front', 'Agencies can offer clients a fully branded portal — your logo, your colours, your domain — while PlaseSent runs the sending, warmup and deliverability underneath.', CTA_START)
+  + '<section class="block"><div class="wrap"><div class="grid3">'
+  + [['Your domain','Clients log in at outreach.youragency.com, secured with SSL, no PlaseSent branding anywhere.','label'],
+     ['Your look','Logo, colours and email footers matched to your agency identity across portal and reports.','spark'],
+     ['Client dashboards','Read-only live dashboards per client: sends, replies, meetings and placement — no screenshots, no spreadsheets.','chart'],
+     ['Branded reports','Scheduled PDF and link reports that look like they came from your team, because they did.','book'],
+     ['Permission control','Decide exactly what each client sees and can touch, per workspace.','verify'],
+     ['Agency pricing','Included on Scale; add client workspaces without per-seat surprises.','users']]
+    .map(c=>'<div class="card"><span class="ic">'+icon(c[2],21)+'</span><h3>'+c[0]+'</h3><p>'+c[1]+'</p></div>').join('')
+  + '</div></div></section>' + ctaBand('Offer outreach under your own brand','White-label is ready on the Scale plan — set it up in an afternoon.');
+}
+
+/* ---------- TOOLS ---------- */
+function toolsPage(){
+  return pageHero('<a href="#/">Home</a> / Resources / Free tools', 'Free tools', 'Free tools for better cold email', 'No signup, no catch. Check a subject line, estimate campaign replies, and generate a clean email signature — right here in your browser.', '')
+  + '<section class="block"><div class="wrap"><div class="grid2">'
+  + '<div class="panel"><span class="mono" style="color:var(--brand)">Tool 1</span><h3 style="font-size:1.3rem;margin:10px 0 4px">Subject line checker</h3><p style="color:var(--muted)">Length, curiosity and spam-risk feedback for your next subject line.</p>'
+  + '<label class="f" for="subjInput">Subject line</label><input type="text" id="subjInput" placeholder="Quick question about Northbeam\u2019s outbound" maxlength="120" />'
+  + '<button class="btn btn-brand" id="subjBtn" style="margin-top:14px">Check subject line</button><div id="subjOut"></div></div>'
+  + '<div class="panel"><span class="mono" style="color:var(--brand)">Tool 2</span><h3 style="font-size:1.3rem;margin:10px 0 4px">Reply estimator</h3><p style="color:var(--muted)">Rough, honest maths: how many replies and meetings a campaign of your size might produce.</p>'
+  + '<label class="f" for="volRange">Emails sent per month: <b id="volVal">10,000</b></label><input type="range" id="volRange" min="500" max="100000" step="500" value="10000" />'
+  + '<label class="f" for="rateRange">Expected reply rate: <b id="rateVal">4%</b></label><input type="range" id="rateRange" min="1" max="12" step="0.5" value="4" />'
+  + '<div class="tool-out"><div style="display:flex;gap:26px;flex-wrap:wrap"><div><span style="color:var(--muted);font-size:.85rem">Estimated replies</span><div class="calc-out" id="repOut">400</div></div><div><span style="color:var(--muted);font-size:.85rem">Meetings (at 25% of replies)</span><div class="calc-out" id="meetOut">100</div></div></div><p style="color:var(--muted);font-size:.87rem;margin-top:8px">Estimates only — real results depend on your list, offer and market. Verified, personalised campaigns sit at the top of the range.</p></div></div>'
+  + '<div class="panel"><span class="mono" style="color:var(--brand)">Tool 3</span><h3 style="font-size:1.3rem;margin:10px 0 4px">Email signature generator</h3><p style="color:var(--muted)">A clean, professional signature — copy the HTML and paste it into your mail client.</p>'
+  + '<label class="f" for="sigName">Full name</label><input type="text" id="sigName" placeholder="Alex Morgan" />'
+  + '<label class="f" for="sigRole">Job title</label><input type="text" id="sigRole" placeholder="Founder, Northbeam Studio" />'
+  + '<label class="f" for="sigSite">Website</label><input type="text" id="sigSite" placeholder="northbeam.io" />'
+  + '<button class="btn btn-brand" id="sigBtn" style="margin-top:14px">Generate signature</button><div id="sigOut"></div></div>'
+  + '<div class="panel"><span class="mono" style="color:var(--brand)">Tool 4</span><h3 style="font-size:1.3rem;margin:10px 0 4px">Spam-word scan</h3><p style="color:var(--muted)">The same quick copy scan from our placement test page — check a full draft for trigger phrases and formatting risks.</p>'
+  + '<div style="margin-top:14px"><a class="btn btn-ghost" href="#/placement-test">Open the copy scan →</a></div>'
+  + '<h3 style="font-size:1.3rem;margin:26px 0 4px">Want the full checks?</h3><p style="color:var(--muted)">Placement tests, verification and deliverability monitoring run on real infrastructure inside PlaseSent — free during your trial.</p>'
+  + '<div style="margin-top:14px"><a class="btn btn-brand" href="#/get-started">Start free trial</a></div></div>'
+  + '</div></div></section>' + ctaBand();
+}
+function bindTools(){
+  const sb=$('#subjBtn');
+  if(sb) sb.addEventListener('click', ()=>{
+    const v=($('#subjInput').value||'').trim(); const out=$('#subjOut');
+    if(!v){ out.innerHTML='<div class="tool-out">Type a subject line first.</div>'; return; }
+    const len=v.length; let score=100, notes=[];
+    if(len<15){ score-=25; notes.push('Very short — fine for a bump email, but it may say too little for a first touch.'); }
+    if(len>55){ score-=20; notes.push(len+' characters — mobile inboxes cut off around 40–50, so the end may never be seen.'); }
+    if(len>=20&&len<=50) notes.push('Length is in the sweet spot for desktop and mobile.');
+    const hits=SPAM_WORDS.filter(w=>v.toLowerCase().includes(w));
+    if(hits.length){ score-=hits.length*15; notes.push('Contains trigger wording: <b>'+hits.join(', ')+'</b>.'); }
+    if(/[A-Z]{4,}/.test(v)){ score-=12; notes.push('ALL-CAPS words trigger filters and read as shouting.'); }
+    if((v.match(/!/g)||[]).length>0){ score-=8; notes.push('Exclamation marks rarely help cold subject lines.'); }
+    if(/\?/.test(v)) notes.push('A genuine question format tends to earn opens — good.');
+    if(/\d/.test(v)) notes.push('Specific numbers can lift opens when they are true and relevant.');
+    if(!/\?/.test(v)&&!/\d/.test(v)&&len>=15&&len<=55) notes.push('Consider making it more specific — a name, a number or a real question.');
+    score=Math.max(5,Math.min(100,score));
+    out.innerHTML='<div class="tool-out"><div style="display:flex;justify-content:space-between;align-items:baseline"><b>Subject score</b><span class="calc-out" style="font-size:1.5rem">'+score+'/100</span></div><div class="scorebar"><i style="width:'+score+'%"></i></div><p style="margin-top:12px;color:var(--ink2)">'+notes.join(' ')+'</p></div>';
+  });
+  const vol=$('#volRange'), rate=$('#rateRange');
+  if(vol&&rate){
+    const upd=()=>{ $('#volVal').textContent=Number(vol.value).toLocaleString(); $('#rateVal').textContent=rate.value+'%';
+      const reps=Math.round(vol.value*rate.value/100); $('#repOut').textContent=reps.toLocaleString(); $('#meetOut').textContent=Math.round(reps*0.25).toLocaleString(); };
+    vol.addEventListener('input',upd); rate.addEventListener('input',upd); upd();
+  }
+  const gb=$('#sigBtn');
+  if(gb) gb.addEventListener('click', ()=>{
+    const n=esc($('#sigName').value||'Your Name'), r=esc($('#sigRole').value||'Your title'), s=esc($('#sigSite').value||'yourwebsite.com');
+    const html='<table cellpadding="0" cellspacing="0" style="font-family:Arial,sans-serif;color:#0f1a2e"><tr><td style="border-left:3px solid #5b7cff;padding-left:12px"><div style="font-size:16px;font-weight:bold">'+n+'</div><div style="font-size:13px;color:#5a657f">'+r+'</div><div style="font-size:13px"><a href="https://'+s+'" style="color:#5b7cff;text-decoration:none">'+s+'</a></div></td></tr></table>';
+    $('#sigOut').innerHTML='<div class="tool-out"><div style="background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px;color:#0f1a2e">'+html+'</div><label class="f">HTML — tap to select, then copy</label><textarea rows="5" readonly onclick="this.select()">'+esc(html)+'</textarea></div>';
+  });
+}
+
+/* ---------- BLOG ---------- */
+function blogPage(){
+  return pageHero('<a href="#/">Home</a> / Blog', 'The PlaseSent Blog', 'Outbound, minus the guesswork', 'Practical guides on deliverability, sequences, personalization and pipeline — written from what actually works in inboxes, not theory.', '')
+  + '<section class="block"><div class="wrap"><div class="grid3">'
+  + POSTS.map(p=>'<a class="post-card" href="#/blog/'+p.slug+'" style="color:var(--ink)"><div class="thumb" style="background:'+p.color+'">'+p.cat+'</div><div class="body"><span class="meta">'+p.mins+' min read · '+p.cat+'</span><h3>'+p.title+'</h3><p>'+p.excerpt+'</p><span class="go" style="color:var(--brand);font-weight:700;margin-top:14px">Read article →</span></div></a>').join('')
+  + '</div><p style="color:var(--muted);margin-top:28px">More guides are published every week — deliverability teardowns, sequence breakdowns and outbound playbooks for agencies, founders and sales teams.</p></div></section>'
+  + ctaBand('Put the guides into practice','Every technique on this blog is built into PlaseSent. Try it free for 14 days.');
+}
+function postPage(p){
+  const body=p.body.map(b=> b[0]==='h2' ? '<h2>'+b[1]+'</h2>' : b[0]==='ul' ? '<ul>'+b[1].map(li=>'<li>'+li+'</li>').join('')+'</ul>' : '<p>'+b[1]+'</p>').join('');
+  return '<div class="wrap page-hero" style="max-width:820px"><div class="crumb"><a href="#/">Home</a> / <a href="#/blog">Blog</a> / '+p.cat+'</div><span class="mono kicker">'+p.cat+' · '+p.mins+' min read</span><h1 style="font-size:clamp(1.9rem,4vw,2.7rem)">'+p.title+'</h1><p class="sub">'+p.excerpt+'</p></div>'
+  + '<section class="block tight"><div class="wrap"><article class="post">'+body+'</article>'
+  + '<div style="max-width:720px;margin:44px auto 0"><h3 style="margin-bottom:14px">Keep reading</h3><div class="seg-ctl">'+POSTS.filter(x=>x.slug!==p.slug).map(x=>'<button onclick="location.hash=\'#/blog/'+x.slug+'\'">'+x.title+'</button>').join('')+'</div></div>'
+  + '</div></section>' + ctaBand();
+}
+
+/* ---------- GET STARTED ---------- */
+function getStartedPage(plan){
+  const sel = plan && PLANS.some(p=>p.name.toLowerCase()===plan) ? plan : 'growth';
+  return pageHero('<a href="#/">Home</a> / Get started', 'Start free', 'Create your PlaseSent workspace', 'Pick a plan to start your 14-day free trial. Every plan includes unlimited inboxes, warmup and teammates — no card required.', '')
+  + '<section class="block tight"><div class="wrap"><div class="split" style="align-items:start"><div class="panel"><h3 style="font-size:1.25rem;margin-bottom:6px">1 · Choose your plan</h3>'
+  + '<div class="seg-ctl" id="planPick" style="margin:12px 0 6px">'+PLANS.map(p=>'<button data-plan="'+p.name.toLowerCase()+'" class="'+(p.name.toLowerCase()===sel?'on':'')+'">'+p.name+' — $'+p.annual+'/mo annual</button>').join('')+'</div>'
+  + '<h3 style="font-size:1.25rem;margin:26px 0 6px">2 · Your details</h3>'
+  + '<label class="f" for="gsName">Full name</label><input type="text" id="gsName" placeholder="Alex Morgan" autocomplete="name" />'
+  + '<label class="f" for="gsEmail">Work email</label><input type="email" id="gsEmail" placeholder="alex@company.com" autocomplete="email" />'
+  + '<label class="f" for="gsCompany">Company</label><input type="text" id="gsCompany" placeholder="Company or agency name" autocomplete="organization" />'
+  + '<button class="btn btn-brand btn-lg" id="gsBtn" style="margin-top:22px;width:100%">Create my free workspace</button>'
+  + '<p style="color:var(--muted);font-size:.87rem;margin-top:12px">14 days free on the plan you pick. No card, no commitment — downgrade, upgrade or cancel anytime.</p><div id="gsOut"></div></div>'
+  + '<div><h3 style="font-size:1.3rem;margin-bottom:14px">What happens next</h3><div class="steps" style="grid-template-columns:1fr;gap:12px">'
+  + '<div class="step"><span class="num">Minute 1</span><h3>Connect your inboxes</h3><p>Gmail, Outlook or any SMTP/IMAP mailbox. Warmup can start immediately.</p></div>'
+  + '<div class="step"><span class="num">Minute 5</span><h3>Add a sending domain</h3><p>We generate your SPF, DKIM and DMARC records and check them for you.</p></div>'
+  + '<div class="step"><span class="num">Day 1</span><h3>Import and verify leads</h3><p>Upload a list; verification and enrichment clean it before anything sends.</p></div>'
+  + '<div class="step"><span class="num">Week 2–3</span><h3>Launch your first sequence</h3><p>Once inboxes are warm, launch with confidence — placement test first.</p></div></div></div>'
+  + '</div></div></section>';
+}
+function bindGetStarted(){
+  const pick=$('#planPick');
+  if(pick) pick.querySelectorAll('button').forEach(b=>b.addEventListener('click', ()=>{ pick.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); }));
+  const btn=$('#gsBtn'); if(!btn) return;
+  btn.addEventListener('click', ()=>{
+    const name=($('#gsName').value||'').trim(), email=($('#gsEmail').value||'').trim(), co=($('#gsCompany').value||'').trim();
+    const out=$('#gsOut');
+    if(!name||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ out.innerHTML='<div class="tool-out" style="border-color:var(--red)">Please add your name and a valid work email so we can set up the right workspace.</div>'; return; }
+    const planBtn=$('#planPick .on'); const plan=planBtn?planBtn.textContent.split(' — ')[0]:'Growth';
+    out.innerHTML='<div class="tool-out"><b>Workspace request received — welcome aboard, '+esc(name.split(' ')[0])+'.</b><p style="color:var(--ink2);margin-top:6px">Plan: <b>'+esc(plan)+'</b> (14-day free trial) · Account email: '+esc(email)+(co?' · Company: '+esc(co):'')+'</p><p style="color:var(--muted);margin-top:6px;font-size:.92rem">Your setup checklist: 1) Connect your first inbox, 2) add a sending domain and publish the DNS records we generate, 3) import a lead list for verification, 4) launch after warmup. A confirmation would normally arrive by email on the live service.</p></div>';
+    toast('Workspace request saved for '+email);
+  });
+}
+
+/* ---------- LEGAL ---------- */
+function legalPage(kind){
+  const priv = kind==='privacy';
+  return '<div class="wrap page-hero"><div class="crumb"><a href="#/">Home</a> / '+(priv?'Privacy policy':'Terms of service')+'</div><h1>'+(priv?'Privacy Policy':'Terms of Service')+'</h1><p class="sub">Last updated: 1 November 2026. '+(priv?'How PlaseSent collects, uses and protects data.':'The terms that govern your use of PlaseSent.')+'</p></div>'
+  + '<section class="block tight"><div class="wrap"><div class="legal">'
+  + (priv ? [
+      ['Information we collect','We collect account information you provide (name, email, company), billing details processed by our payment provider, and usage data about how you use PlaseSent. Lead data you upload remains yours; we process it only to provide the service.'],
+      ['How we use information','To operate and improve PlaseSent, provide support, send service notices, and meet legal obligations. We do not sell personal information, and lead data you upload is never shared with other customers.'],
+      ['Data processing & subprocessors','We use a small set of vetted subprocessors for hosting, payments and email delivery, each bound by data-processing agreements. A current list is available on request.'],
+      ['Your rights','You may access, correct, export or delete your personal data at any time from your workspace settings or by contacting us. Lead records can be deleted in bulk, and suppression requests are honoured immediately.'],
+      ['Security','Data is encrypted in transit and at rest, access is role-based and logged, and we review our practices regularly. No system is perfectly secure, but we treat your data like our own.'],
+      ['Contact','Questions about privacy can be sent to privacy@plasesent.com.']
+    ] : [
+      ['The service','PlaseSent provides cold-email outreach software, including warmup, verification, enrichment, sequencing and analytics. You are responsible for the content you send and the lists you upload.'],
+      ['Acceptable use','You agree to send only to business contacts with a legitimate basis, honour unsubscribes and suppression lists immediately, keep bounce rates within healthy limits, and never use PlaseSent for deceptive, unlawful or abusive mail. Accounts that endanger shared infrastructure may be limited or suspended.'],
+      ['Your data','You own your leads, campaigns and content. You grant us the licence needed to process them to run the service. You can export or delete your data at any time.'],
+      ['Billing','Paid plans renew automatically for the period selected until cancelled. Trials convert only if you add payment details and confirm. Fees are non-refundable except where required by law.'],
+      ['Availability & liability','We work hard to keep PlaseSent available and your deliverability healthy, but email placement depends on third-party providers and cannot be guaranteed. Our liability is limited to the fees you paid in the previous twelve months.'],
+      ['Changes','We may update these terms; material changes will be announced in the product and by email at least 14 days before they take effect.']
+    ]).map(s=>'<h2>'+s[0]+'</h2><p>'+s[1]+'</p>').join('')
+  + '</div></div></section>' + ctaBand();
+}
+
+/* ---------- ROUTER ---------- */
+function rerender(){ route(true); }
+function route(keepScroll){
+  const raw=(location.hash||'#/').replace(/^#\/?/,'');
+  const [pathQ] = [raw];
+  const [path, query] = pathQ.split('?');
+  const parts = path.split('/').filter(Boolean);
+  const params = new URLSearchParams(query||'');
+  let html='';
+  if(parts.length===0) html=homePage();
+  else if(parts[0]==='pricing') html=pricingSection(true);
+  else if(parts[0]==='features' && FEATURES.some(f=>f.slug===parts[1])) html=featurePage(FEATURES.find(f=>f.slug===parts[1]));
+  else if(parts[0]==='solutions' && SOLUTIONS.some(s=>s.slug===parts[1])) html=solutionPage(SOLUTIONS.find(s=>s.slug===parts[1]));
+  else if(parts[0]==='stories') html=storiesPage();
+  else if(parts[0]==='placement-test') html=placementPage();
+  else if(parts[0]==='api') html=apiPage();
+  else if(parts[0]==='mobile-app') html=mobilePage();
+  else if(parts[0]==='white-label') html=whiteLabelPage();
+  else if(parts[0]==='tools') html=toolsPage();
+  else if(parts[0]==='blog' && parts[1] && POSTS.some(p=>p.slug===parts[1])) html=postPage(POSTS.find(p=>p.slug===parts[1]));
+  else if(parts[0]==='blog') html=blogPage();
+  else if(parts[0]==='get-started') html=getStartedPage(params.get('plan'));
+  else if(parts[0]==='privacy') html=legalPage('privacy');
+  else if(parts[0]==='terms') html=legalPage('terms');
+  else html=homePage();
+  app.innerHTML=html;
+  bindPricingToggle(); bindScan(); bindTools(); bindGetStarted();
+  $('#mobileMenu').classList.remove('open');
+  document.querySelectorAll('[data-drop]').forEach(d=>d.classList.remove('open'));
+  if(!keepScroll) window.scrollTo({top:0});
+}
+window.addEventListener('hashchange', ()=>route(false));
+route(false);
+</script>
+</body>
+</html>
