@@ -15,9 +15,9 @@ export function ProfileForm({ initialName, initialEmail }: { initialName: string
     e.preventDefault();
     setBusy(true); setMsg("");
     try {
-      const r = await fetch("/api/auth/profile", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ fullName: name, email }) });
-      const j = await r.json().catch(() => ({})) as { error?: string };
-      setMsg(r.ok ? "Profile updated." : (j.error ?? apiError(r.status, "Could not update profile.")));
+      const r = await fetch("/api/auth/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ fullName: name, email }) });
+      const j = await r.json().catch(() => ({})) as { error?: string; message?: string };
+      setMsg(r.ok ? "Profile updated." : (j.message ?? j.error ?? apiError(r.status, "Could not update profile.")));
     } catch { setMsg("Could not reach the server."); }
     setBusy(false);
   }
