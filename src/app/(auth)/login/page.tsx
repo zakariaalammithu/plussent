@@ -1,4 +1,4 @@
-// PlaseSent sign-in page. Posts to /api/auth/login; supports the TOTP second
+// PlusSent sign-in page. Posts to /api/auth/login; supports the TOTP second
 // factor (server replies totp_required, then this form asks for the 6-digit code).
 "use client";
 
@@ -64,7 +64,7 @@ function LoginForm() {
 
   return (
     <main style={{ maxWidth: 420, margin: "80px auto", padding: 24, fontFamily: "system-ui, sans-serif" }}>
-      <h1 style={{ fontSize: 28, marginBottom: 4 }}>Sign in to PlaseSent</h1>
+      <h1 style={{ fontSize: 28, marginBottom: 4 }}>Sign in to PlusSent</h1>
       <p style={{ color: "#555", marginBottom: 24 }}>Cold email, done properly.</p>
       {error && (
         <p role="alert" style={{ background: "#fde8e8", color: "#9b1c1c", padding: 10, borderRadius: 8 }}>

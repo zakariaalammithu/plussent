@@ -1,4 +1,4 @@
-// PlaseSent mailer — transactional email via SMTP (nodemailer).
+// PlusSent mailer — transactional email via SMTP (nodemailer).
 // Sends ONLY when SMTP_HOST is configured. Otherwise it logs and returns
 // { sent: false, reason: "smtp_not_configured" } — it NEVER pretends an
 // email was sent. Callers must surface that honestly to the user.
@@ -41,13 +41,13 @@ export async function sendMail(input: SendMailInput): Promise<SendMailResult> {
   const transport = getTransporter();
   if (!transport) {
     console.warn(
-      `[plasesent] mailer: SMTP not configured — email to ${input.to} NOT sent (subject: ${input.subject})`,
+      `[plussent] mailer: SMTP not configured — email to ${input.to} NOT sent (subject: ${input.subject})`,
     );
     return { sent: false, reason: "smtp_not_configured" };
   }
   try {
     const info = await transport.sendMail({
-      from: process.env.SMTP_FROM ?? "noreply@plasesent.com",
+      from: process.env.SMTP_FROM ?? "noreply@plussent.com",
       to: input.to,
       subject: input.subject,
       text: input.text,
@@ -56,7 +56,7 @@ export async function sendMail(input: SendMailInput): Promise<SendMailResult> {
     return { sent: true, messageId: info.messageId ?? "" };
   } catch (err) {
     const reason = err instanceof Error ? err.message : "smtp_error";
-    console.error(`[plasesent] mailer: failed to send to ${input.to}:`, reason);
+    console.error(`[plussent] mailer: failed to send to ${input.to}:`, reason);
     return { sent: false, reason };
   }
 }

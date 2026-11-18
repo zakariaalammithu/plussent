@@ -1,13 +1,13 @@
-# PlaseSent — Audit, Architecture & Roadmap
+# PlusSent — Audit, Architecture & Roadmap
 
 ## 1. Audit (2026-11-18)
 
 ### What existed before this build
-- GitHub `zakariaalammithu/plasesent`, branch `main`, one commit (`c0ccb62`):
+- GitHub `zakariaalammithu/plussent`, branch `main`, one commit (`c0ccb62`):
   `index.html` (104 KB static marketing export) + `README.md`. No backend, no database,
   no auth, no sending — a marketing page only.
-- Live: `https://plasesent.vercel.app/` returned HTTP 200 (the marketing export).
-- A separate Muse artifact (`plasesent`) holds the same marketing site (static, no backend).
+- Live: `https://plasesent.vercel.app/` returned HTTP 200 (the marketing export). The Vercel project still carries the old name — rename it to `plussent` in the Vercel dashboard (and add the intended custom domain `plussent.com`) so the live URL becomes `https://plussent.vercel.app/`.
+- A separate Muse artifact (`plussent`) holds the same marketing site (static, no backend).
 - Reference codebase `~/workspace/instantly` (not in this repo): Next.js 16 + React 19 +
   Cloudflare Worker (`worker/index.ts`, 824 lines, all APIs in one file) + D1/Drizzle,
   dashboard/campaigns/leads/CRM/inbox/admin, Stripe/OpenAI/Gmail/Outlook env vars.
@@ -24,8 +24,9 @@ unified inbox, warmup/deliverability, analytics, billing, admin, AI, tests, migr
 ## 2. Architecture (chosen)
 
 - **Stack: Next.js 15 (App Router) + React 19 + TypeScript, hosted on Vercel**
-  (chosen because `plasesent.vercel.app` already exists on Vercel; no migration).
-- **Database: Drizzle ORM + libSQL (SQLite)** — `file:./data/plasesent.db` locally;
+  (chosen because the Vercel project already exists; rename it from `plasesent` to
+  `plussent` in the Vercel dashboard — the rename cannot be done from this repo).
+- **Database: Drizzle ORM + libSQL (SQLite)** — `file:./data/plussent.db` locally;
   hosted libSQL (Turso) via `TURSO_DATABASE_URL`/`TURSO_AUTH_TOKEN` in production.
   No Supabase introduced (existing stack had none; libSQL covers the need).
 - **Auth:** email+password (bcryptjs), opaque session tokens (SHA-256 hashed in DB,
@@ -48,7 +49,7 @@ unified inbox, warmup/deliverability, analytics, billing, admin, AI, tests, migr
   webhooks verified with `stripe.webhooks.constructEvent`; a subscription is NEVER
   marked paid from a frontend success message. Without keys: `awaiting_credentials`.
 - **Marketing:** the original `index.html` export is preserved at `public/marketing.html`;
-  the app `/` route is the PlaseSent landing page (original copy).
+  the app `/` route is the PlusSent landing page (original copy).
 
 ## 3. What CANNOT be verified live without credentials
 Gmail/Outlook OAuth (needs Google/Microsoft OAuth clients + redirect URIs), real SMTP

@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
   const resetUrl = `${appUrl()}/reset?token=${token}`;
   const mail = await sendMail({
     to: email,
-    subject: "Reset your PlaseSent password",
+    subject: "Reset your PlusSent password",
     text: `Reset your password by visiting: ${resetUrl}\nThis link expires in 1 hour. If you did not request this, ignore this email.`,
     html: `<p><a href="${resetUrl}">Reset your password</a></p><p>This link expires in 1 hour. If you did not request this, ignore this email.</p>`,
   });

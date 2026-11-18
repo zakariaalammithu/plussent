@@ -1,4 +1,4 @@
-// PlaseSent — queue one sequence step as a queued emailMessage (Module B).
+// PlusSent — queue one sequence step as a queued emailMessage (Module B).
 // Shared by the campaign routes (activate / assign leads) and scripts/send-queue.ts.
 // A message is only ever created as status "queued" — sending happens in the
 // worker, never here, and never without a real SMTP send.

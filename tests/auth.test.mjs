@@ -1,4 +1,4 @@
-// PlaseSent auth tests — node:test, no framework, no DB server.
+// PlusSent auth tests — node:test, no framework, no DB server.
 // Run: node --test tests/auth.test.mjs
 // Covers: bcrypt hash/verify, TOTP round-trip, hashToken determinism,
 // encryptSecret round-trip, rate-limit logic, TOTP secret generation.
@@ -109,9 +109,9 @@ test("tenant: roleAtLeast follows owner > admin > member > viewer", () => {
 test("totpAuthUrl builds a valid otpauth URL for the secret", () => {
   const secret = auth.generateTotpSecret();
   const url = auth.totpAuthUrl(secret, "user@example.com");
-  assert.ok(url.startsWith("otpauth://totp/PlaseSent:user%40example.com?"));
+  assert.ok(url.startsWith("otpauth://totp/PlusSent:user%40example.com?"));
   assert.ok(url.includes(`secret=${secret}`));
-  assert.ok(url.includes("issuer=PlaseSent"));
+  assert.ok(url.includes("issuer=PlusSent"));
 });
 
 test("base32Encode round-trips through the TOTP secret generator", () => {

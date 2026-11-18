@@ -46,7 +46,7 @@ export default function AiPage() {
   return (
     <div>
       <p className="muted">
-        Ask PlaseSent AI to draft a sequence, personalize an opener, or analyze a reply. Every answer shows the
+        Ask PlusSent AI to draft a sequence, personalize an opener, or analyze a reply. Every answer shows the
         provider that produced it — a real provider when configured, otherwise the built-in heuristic, clearly labelled.
         {usage && <> Usage today: <strong>{usage.today} / {usage.cap}</strong> (per-workspace daily cap).</>}
       </p>

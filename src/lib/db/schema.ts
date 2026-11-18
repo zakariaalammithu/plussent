@@ -1,4 +1,4 @@
-// PlaseSent DB schema — Drizzle + libSQL (SQLite). Tenant = workspace.
+// PlusSent DB schema — Drizzle + libSQL (SQLite). Tenant = workspace.
 // Every tenant-scoped table carries workspaceId; queries MUST filter by it (see lib/tenant.ts).
 import { index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 

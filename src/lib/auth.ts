@@ -1,4 +1,4 @@
-// PlaseSent auth — sessions, passwords, rate limiting, audit logging.
+// PlusSent auth — sessions, passwords, rate limiting, audit logging.
 // Opaque session tokens: random 32 bytes, SHA-256 hash stored in DB, raw token
 // only ever in the httpOnly "ps_session" cookie. Never log tokens or passwords.
 import bcrypt from "bcryptjs";
@@ -150,7 +150,7 @@ export async function requireWorkspace(
 
 // ---------------------------------------------------------------- rate limiting
 // In-memory fixed-window limiter. Per-process only — adequate for a single
-// instance; a distributed store is needed if PlaseSent ever runs multi-instance.
+// instance; a distributed store is needed if PlusSent ever runs multi-instance.
 const rateLimitStore = new Map<string, number[]>();
 
 /**
@@ -221,7 +221,7 @@ export async function auditLog(input: {
     });
   } catch (err) {
     // Audit logging must never break the request it records.
-    console.error("[plasesent] auditLog failed", err);
+    console.error("[plussent] auditLog failed", err);
   }
 }
 
@@ -284,7 +284,7 @@ export function generateTotpSecret(): string {
   return base32Encode(randomBytes(20));
 }
 
-export function totpAuthUrl(secret: string, email: string, issuer = "PlaseSent"): string {
+export function totpAuthUrl(secret: string, email: string, issuer = "PlusSent"): string {
   const label = `${encodeURIComponent(issuer)}:${encodeURIComponent(email)}`;
   return `otpauth://totp/${label}?secret=${secret}&issuer=${encodeURIComponent(issuer)}&algorithm=SHA1&digits=6&period=30`;
 }
@@ -357,6 +357,6 @@ export async function logLoginAttempt(
       createdAt: now(),
     });
   } catch (err) {
-    console.error("[plasesent] logLoginAttempt failed", err);
+    console.error("[plussent] logLoginAttempt failed", err);
   }
 }

@@ -1,4 +1,4 @@
-// PlaseSent tenant isolation — every tenant-scoped query MUST filter by
+// PlusSent tenant isolation — every tenant-scoped query MUST filter by
 // workspaceId, and membership must be checked before any workspace data is
 // returned. Use assertWorkspaceAccess() at the top of every workspace route.
 import { and, eq } from "drizzle-orm";

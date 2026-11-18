@@ -1,4 +1,4 @@
-// PlaseSent email-verification page (?token=...). Verifies the token on load
+// PlusSent email-verification page (?token=...). Verifies the token on load
 // via /api/auth/verify and shows the result. Also accepts POST verification
 // links that land here from the email.
 "use client";
@@ -27,7 +27,7 @@ function VerifyForm() {
         const data = (await res.json()) as { error?: string; ok?: boolean };
         if (res.ok && data.ok) {
           setState("ok");
-          setMessage("Your email is verified. You can now use PlaseSent.");
+          setMessage("Your email is verified. You can now use PlusSent.");
         } else {
           setState("error");
           setMessage("This verification link is invalid or has expired. Sign in and request a new one.");

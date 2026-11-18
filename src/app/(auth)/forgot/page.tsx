@@ -1,4 +1,4 @@
-// PlaseSent forgot-password page. Posts to /api/auth/forgot; always shows the
+// PlusSent forgot-password page. Posts to /api/auth/forgot; always shows the
 // same generic message (the API never reveals whether the email exists).
 "use client";
 

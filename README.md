@@ -1,4 +1,4 @@
-# PlaseSent
+# PlusSent
 
 AI-powered B2B cold email outreach & sales engagement SaaS.
 
@@ -12,7 +12,10 @@ AI-powered B2B cold email outreach & sales engagement SaaS.
 ```sh
 cp .env.example .env.local   # fill in ENCRYPTION_KEY at minimum (openssl rand -hex 32)
 npm install
-npm run db:migrate           # creates ./data/plasesent.db (23 tables; also auto-runs on server start)
+npm run db:migrate           # creates ./data/plussent.db (23 tables; also auto-runs on server start)
+# Rename note (2026-11-18): brand was PlaseSent; the local DB default moved from
+# ./data/plasesent.db to ./data/plussent.db, so an old local file is not picked up
+# (fresh DB auto-migrates). Sessions are unaffected — the cookie is `ps_session`.
 npm run dev                  # http://localhost:3000
 npm test                     # node --test, 33 tests
 npm run build && npm start   # production build
@@ -53,7 +56,9 @@ provider, admin panel, team workspaces.
 
 Import this repo in Vercel (Framework: Next.js). Set env vars above
 (`ENCRYPTION_KEY`, `SESSION_SECRET` — generate 32+ byte secrets — plus
-`TURSO_*`, `APP_URL=https://plasesent.vercel.app`). The app auto-migrates its
+`TURSO_*`, `APP_URL=https://plussent.vercel.app`). Rename the Vercel project from
+`plasesent` to `plussent` first (Vercel dashboard), and add the intended custom domain
+`plussent.com` there. The app auto-migrates its
 schema on server start (`src/instrumentation.ts`). Background sending needs a
 separate worker/cron hitting the send queue (see `scripts/send-queue.ts`);
 do not run persistent jobs inside serverless functions.

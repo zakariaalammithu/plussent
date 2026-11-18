@@ -1,4 +1,4 @@
-// PlaseSent — Module B API auth helper.
+// PlusSent — Module B API auth helper.
 // Wraps src/lib/auth.ts (owned by the auth builder): requireAuth gives the
 // session user; the workspace is the session workspace when set, otherwise
 // the user's first workspace membership. Every Module B route resolves its

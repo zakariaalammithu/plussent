@@ -4,7 +4,7 @@ import * as schema from "./schema";
 
 function dbUrl() {
   if (process.env.TURSO_DATABASE_URL) return process.env.TURSO_DATABASE_URL;
-  const u = process.env.DATABASE_URL || "file:./data/plasesent.db";
+  const u = process.env.DATABASE_URL || "file:./data/plussent.db";
   return u;
 }
 const client = createClient({ url: dbUrl(), authToken: process.env.TURSO_AUTH_TOKEN || undefined });

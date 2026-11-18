@@ -1,4 +1,4 @@
-// OAuth shared logic for Google + Microsoft (PlaseSent auth module).
+// OAuth shared logic for Google + Microsoft (PlusSent auth module).
 // Start endpoints build the REAL authorization URL from env vars; callback
 // endpoints exchange the code for tokens ONLY when the provider is configured.
 // Nothing is invented: no configured client id/secret => 503 oauth_not_configured.
@@ -190,7 +190,7 @@ export async function handleOAuthCallback(
     tokens = await exchangeCode(cfg, code);
     profile = await fetchOAuthProfile(cfg, tokens.access_token);
   } catch (err) {
-    console.error(`[plasesent] oauth ${provider} callback failed`, err);
+    console.error(`[plussent] oauth ${provider} callback failed`, err);
     return NextResponse.redirect(`${loginUrl}?error=oauth_failed`);
   }
 

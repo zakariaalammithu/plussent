@@ -9,7 +9,7 @@ function getKey(): Buffer {
   if (raw) {
     cachedKey = raw.length >= 64 ? Buffer.from(raw.slice(0, 64), "hex") : createHash("sha256").update(raw).digest();
   } else {
-    console.warn("[plasesent] ENCRYPTION_KEY not set — using ephemeral dev key. Credentials will NOT survive restarts.");
+    console.warn("[plussent] ENCRYPTION_KEY not set — using ephemeral dev key. Credentials will NOT survive restarts.");
     cachedKey = randomBytes(32);
   }
   return cachedKey;

@@ -1,4 +1,4 @@
-// PlaseSent — deliverability checks (Module B).
+// PlusSent — deliverability checks (Module B).
 // Real DNS lookups via node:dns/promises. Nothing is faked: a failed lookup
 // reports ok:false with the error, and DKIM reports "not_checked" honestly
 // when no selector is configured (DKIM cannot be checked without one).

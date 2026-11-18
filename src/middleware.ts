@@ -1,4 +1,4 @@
-// PlaseSent middleware — route protection.
+// PlusSent middleware — route protection.
 // Redirects to /login when the ps_session cookie is absent on protected
 // routes. NOTE: middleware runs in the Edge runtime and cannot query the
 // libSQL database, so it checks cookie PRESENCE only. Every API route and

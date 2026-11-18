@@ -1,4 +1,4 @@
-// PlaseSent — per-account SMTP helpers (Module B).
+// PlusSent — per-account SMTP helpers (Module B).
 // Sending accounts store their SMTP credentials encrypted (AES-256-GCM).
 // These helpers decrypt server-side only, verify connections, and send one
 // message through a specific account. Credentials are never returned or logged.

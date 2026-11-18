@@ -1,4 +1,4 @@
-// PlaseSent — campaign pure logic (Module B).
+// PlusSent — campaign pure logic (Module B).
 // No imports, no I/O: safe to unit-test with plain node --test.
 export interface LeadLike {
   firstName?: string | null;

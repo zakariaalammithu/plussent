@@ -10,8 +10,8 @@ export default function ReportsPage() {
     const csv = rows.map((r) => r.join(",")).join("\n");
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-    a.download = "plasesent-analytics.csv"; a.click();
-    setMsg("Downloaded plasesent-analytics.csv (real data from your workspace).");
+    a.download = "plussent-analytics.csv"; a.click();
+    setMsg("Downloaded plussent-analytics.csv (real data from your workspace).");
   }
   return (<main style={{ padding: 24 }}>
     <h1>Reports</h1>

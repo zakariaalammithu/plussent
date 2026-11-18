@@ -1,4 +1,4 @@
-// PlaseSent — CSV parsing + lead validation (Module B).
+// PlusSent — CSV parsing + lead validation (Module B).
 // Pure functions, no I/O. Invalid records are NEVER silently discarded:
 // parseLeads returns them in `invalid` with a row number and a reason.
 export const LEAD_FIELDS = [

@@ -84,9 +84,9 @@ export async function POST(req: NextRequest) {
   const verifyUrl = `${appUrl()}/verify?token=${verifyToken}`;
   const mail = await sendMail({
     to: normalizedEmail,
-    subject: "Verify your PlaseSent email",
-    text: `Welcome to PlaseSent! Verify your email by visiting: ${verifyUrl}\nThis link expires in 24 hours.`,
-    html: `<p>Welcome to PlaseSent!</p><p><a href="${verifyUrl}">Verify your email</a></p><p>This link expires in 24 hours.</p>`,
+    subject: "Verify your PlusSent email",
+    text: `Welcome to PlusSent! Verify your email by visiting: ${verifyUrl}\nThis link expires in 24 hours.`,
+    html: `<p>Welcome to PlusSent!</p><p><a href="${verifyUrl}">Verify your email</a></p><p>This link expires in 24 hours.</p>`,
   });
 
   const { token } = await createSession({

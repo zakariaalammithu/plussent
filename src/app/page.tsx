@@ -36,8 +36,8 @@ const PLANS = [
 ];
 
 const FAQS = [
-  { q: "Do I need my own email accounts?", a: "Yes. PlaseSent sends through accounts you connect — Gmail, Outlook or any SMTP provider. Your credentials are encrypted and never leave your workspace." },
-  { q: "Will my emails land in spam?", a: "No tool can guarantee inbox placement. PlaseSent gives you warmup, domain authentication checks, spam-word analysis and bounce handling so you can see and fix the things that cause spam placement." },
+  { q: "Do I need my own email accounts?", a: "Yes. PlusSent sends through accounts you connect — Gmail, Outlook or any SMTP provider. Your credentials are encrypted and never leave your workspace." },
+  { q: "Will my emails land in spam?", a: "No tool can guarantee inbox placement. PlusSent gives you warmup, domain authentication checks, spam-word analysis and bounce handling so you can see and fix the things that cause spam placement." },
   { q: "Is there a free plan?", a: "Yes — the Free plan includes 100 leads, one email account and one active campaign, with no card required." },
   { q: "How does the AI assistant work?", a: "It drafts sequences, personalizes openers and classifies replies using the AI provider you configure in Settings (OpenAI, Anthropic or Muse). Without a configured provider it falls back to a clearly-labelled local heuristic — it never pretends to be an LLM." },
   { q: "Can I cancel anytime?", a: "Yes. Cancel from Billing and your workspace stays on its current plan until the end of the paid period." },
@@ -50,7 +50,7 @@ export default function LandingPage() {
         <span className="badge badge-brand">Cold email, done properly</span>
         <h1>Cold email that lands in the inbox — and gets answered.</h1>
         <p className="lede">
-          PlaseSent brings leads, sequences, warmup, deliverability and one unified inbox into a single
+          PlusSent brings leads, sequences, warmup, deliverability and one unified inbox into a single
           workspace, so your outbound stops being a pile of spreadsheets and starts being a pipeline.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
@@ -64,7 +64,7 @@ export default function LandingPage() {
 
       <section className="section" id="features">
         <h2>Everything outbound needs, in one place</h2>
-        <p className="sub">No juggling five tools. PlaseSent covers the whole loop — find, verify, send, warm up, reply, measure.</p>
+        <p className="sub">No juggling five tools. PlusSent covers the whole loop — find, verify, send, warm up, reply, measure.</p>
         <div className="grid grid-3">
           {FEATURES.map((f) => (
             <article key={f.title} className="card">

@@ -4,12 +4,12 @@ import "./globals.css";
 import ThemeToggle from "./_components/ThemeToggle";
 
 export const metadata: Metadata = {
-  title: "PlaseSent — Cold email that lands in the inbox",
+  title: "PlusSent — Cold email that lands in the inbox",
   description:
-    "PlaseSent is a cold email platform with lead management, multi-step sequences, warmup, deliverability checks, a unified inbox and AI-assisted writing.",
+    "PlusSent is a cold email platform with lead management, multi-step sequences, warmup, deliverability checks, a unified inbox and AI-assisted writing.",
 };
 
-const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('plasesent-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('plussent-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <footer className="footer">
           <p>
-            PlaseSent — cold email that lands in the inbox.{" "}
+            PlusSent — cold email that lands in the inbox.{" "}
             <Link href="/marketing.html">Original marketing page</Link> · <Link href="/login">Log in</Link> ·{" "}
             <Link href="/signup">Sign up</Link>
           </p>

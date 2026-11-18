@@ -1,4 +1,4 @@
-// PlaseSent reset-password page (?token=...). Posts the token + new password
+// PlusSent reset-password page (?token=...). Posts the token + new password
 // to /api/auth/reset. Shows an error when the token is missing or expired.
 "use client";
 

@@ -1,4 +1,4 @@
-// PlaseSent — send-queue worker (Module B).
+// PlusSent — send-queue worker (Module B).
 // Run with:  npm run worker:send-queue   (tsx scripts/send-queue.ts)
 //   or on a schedule (cron / Vercel Cron hitting a trigger — not included here).
 //
@@ -131,7 +131,7 @@ export async function processQueue(): Promise<QueueRunSummary> {
     .orderBy(asc(emailMessages.createdAt))
     .limit(500);
   if (queued.length === 0) {
-    console.log("[plasesent] send-queue: no queued messages.");
+    console.log("[plussent] send-queue: no queued messages.");
     return summary;
   }
 
@@ -201,7 +201,7 @@ export async function processQueue(): Promise<QueueRunSummary> {
     }
     // Campaign must be active to send.
     if (campaign && campaign.status !== "active") {
-      console.log(`[plasesent] send-queue: message ${msg.id} left queued — campaign ${campaign.status}.`);
+      console.log(`[plussent] send-queue: message ${msg.id} left queued — campaign ${campaign.status}.`);
       summary.leftQueued++;
       continue;
     }
@@ -232,18 +232,18 @@ export async function processQueue(): Promise<QueueRunSummary> {
     // Sending account.
     const account = msg.emailAccountId ? accountById.get(msg.emailAccountId) : null;
     if (!account) {
-      console.log(`[plasesent] send-queue: message ${msg.id} left queued — smtp_not_configured (no sending account).`);
+      console.log(`[plussent] send-queue: message ${msg.id} left queued — smtp_not_configured (no sending account).`);
       summary.leftQueued++;
       continue;
     }
     // Daily limits.
     if (campaign && (sentByCampaign.get(campaign.id) ?? 0) >= campaign.dailyLimit) {
-      console.log(`[plasesent] send-queue: campaign ${campaign.id} daily limit reached; message ${msg.id} left queued.`);
+      console.log(`[plussent] send-queue: campaign ${campaign.id} daily limit reached; message ${msg.id} left queued.`);
       summary.leftQueued++;
       continue;
     }
     if ((sentByAccount.get(account.id) ?? 0) >= account.dailyLimit) {
-      console.log(`[plasesent] send-queue: account ${account.id} daily limit reached; message ${msg.id} left queued.`);
+      console.log(`[plussent] send-queue: account ${account.id} daily limit reached; message ${msg.id} left queued.`);
       summary.leftQueued++;
       continue;
     }
@@ -262,7 +262,7 @@ export async function processQueue(): Promise<QueueRunSummary> {
             error: encodeRetryState({ attempts, nextRetryAt, message: result.reason }),
           })
           .where(eq(emailMessages.id, msg.id));
-        console.log(`[plasesent] send-queue: message ${msg.id} failed (attempt ${attempts}/${MAX_ATTEMPTS}), retry at ${new Date(nextRetryAt).toISOString()}: ${result.reason}`);
+        console.log(`[plussent] send-queue: message ${msg.id} failed (attempt ${attempts}/${MAX_ATTEMPTS}), retry at ${new Date(nextRetryAt).toISOString()}: ${result.reason}`);
         summary.failed++;
       }
       continue;
@@ -316,10 +316,10 @@ export async function processQueue(): Promise<QueueRunSummary> {
       }
     }
     summary.sent++;
-    console.log(`[plasesent] send-queue: sent message ${msg.id} to ${lead.email}.`);
+    console.log(`[plussent] send-queue: sent message ${msg.id} to ${lead.email}.`);
   }
 
-  console.log(`[plasesent] send-queue: done — ${JSON.stringify(summary)}.`);
+  console.log(`[plussent] send-queue: done — ${JSON.stringify(summary)}.`);
   return summary;
 }
 
@@ -328,14 +328,14 @@ async function failMessage(messageId: string, reason: string): Promise<void> {
     .update(emailMessages)
     .set({ status: "failed", error: reason })
     .where(eq(emailMessages.id, messageId));
-  console.log(`[plasesent] send-queue: message ${messageId} failed — ${reason}.`);
+  console.log(`[plussent] send-queue: message ${messageId} failed — ${reason}.`);
 }
 
 async function main(): Promise<void> {
   try {
     await processQueue();
   } catch (e) {
-    console.error("[plasesent] send-queue: fatal error", e);
+    console.error("[plussent] send-queue: fatal error", e);
     process.exitCode = 1;
   }
   process.exit(0);

@@ -1,4 +1,4 @@
-/* PlaseSent design system — clean SaaS, PlaseSent blue #5271FF, dark navy headings.
+/* PlusSent design system — clean SaaS, PlusSent blue #5271FF, dark navy headings.
    Light/dark via [data-theme] (set by the theme toggle) with prefers-color-scheme fallback. */
 :root {
   --brand: #5271ff;

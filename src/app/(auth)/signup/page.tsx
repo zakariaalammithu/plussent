@@ -1,4 +1,4 @@
-// PlaseSent sign-up page. Posts to /api/auth/signup; on success the user is
+// PlusSent sign-up page. Posts to /api/auth/signup; on success the user is
 // signed in and told honestly whether the verification email was actually sent.
 "use client";
 
@@ -47,7 +47,7 @@ export default function SignupPage() {
           setNotice("Account created. A verification email is on its way — check your inbox.");
         } else {
           setNotice(
-            `Account created. We could not send the verification email yet (${data.verificationEmailReason ?? "email not configured"}). You can still use PlaseSent.`,
+            `Account created. We could not send the verification email yet (${data.verificationEmailReason ?? "email not configured"}). You can still use PlusSent.`,
           );
         }
         setTimeout(() => {
@@ -67,7 +67,7 @@ export default function SignupPage() {
 
   return (
     <main style={{ maxWidth: 420, margin: "80px auto", padding: 24, fontFamily: "system-ui, sans-serif" }}>
-      <h1 style={{ fontSize: 28, marginBottom: 4 }}>Create your PlaseSent account</h1>
+      <h1 style={{ fontSize: 28, marginBottom: 4 }}>Create your PlusSent account</h1>
       <p style={{ color: "#555", marginBottom: 24 }}>Free plan to start — your own workspace is created automatically.</p>
       {error && (
         <p role="alert" style={{ background: "#fde8e8", color: "#9b1c1c", padding: 10, borderRadius: 8 }}>

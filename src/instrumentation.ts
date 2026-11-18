@@ -6,9 +6,9 @@ export async function register() {
     try {
       const { ensureSchema } = await import("../scripts/migrate");
       const n = await ensureSchema();
-      console.log(`[plasesent] startup schema check: ${n} tables ensured.`);
+      console.log(`[plussent] startup schema check: ${n} tables ensured.`);
     } catch (err) {
-      console.error("[plasesent] startup schema check FAILED", err);
+      console.error("[plussent] startup schema check FAILED", err);
     }
   }
 }

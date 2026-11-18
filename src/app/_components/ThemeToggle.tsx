@@ -9,10 +9,10 @@ export default function ThemeToggle() {
   function apply(next: string) {
     if (next === "system") {
       document.documentElement.removeAttribute("data-theme");
-      localStorage.removeItem("plasesent-theme");
+      localStorage.removeItem("plussent-theme");
     } else {
       document.documentElement.setAttribute("data-theme", next);
-      localStorage.setItem("plasesent-theme", next);
+      localStorage.setItem("plussent-theme", next);
     }
     setTheme(next);
   }
