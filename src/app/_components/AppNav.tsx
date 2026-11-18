@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLogo from "./BrandLogo";
 
 export const NAV_SECTIONS: { group: string; items: { href: string; label: string }[] }[] = [
   {
@@ -40,8 +41,8 @@ export const NAV_SECTIONS: { group: string; items: { href: string; label: string
 export default function AppNav({ current }: { current?: string }) {
   return (
     <aside className="sidebar">
-      <Link href="/dashboard" className="logo" style={{ padding: "0.25rem 0.75rem 0.75rem" }}>
-        Plase<span>Sent</span>
+      <Link href="/dashboard" aria-label="PlusSent — dashboard" style={{ padding: "0.25rem 0.5rem 0.75rem", display: "inline-flex" }}>
+        <BrandLogo variant="full" height={30} />
       </Link>
       {NAV_SECTIONS.map((s) => (
         <div key={s.group}>

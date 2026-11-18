@@ -3,6 +3,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import BrandLogo from "../../_components/BrandLogo";
 
 const inputStyle: React.CSSProperties = {
   display: "block",
@@ -46,6 +47,7 @@ export default function ForgotPage() {
 
   return (
     <main style={{ maxWidth: 420, margin: "80px auto", padding: 24, fontFamily: "system-ui, sans-serif" }}>
+      <div style={{ marginBottom: 20 }}><BrandLogo variant="full" height={40} /></div>
       <h1 style={{ fontSize: 28, marginBottom: 4 }}>Forgot your password?</h1>
       <p style={{ color: "#555", marginBottom: 24 }}>We will send a reset link to your email.</p>
       {done ? (

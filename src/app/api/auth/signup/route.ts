@@ -16,7 +16,7 @@ import {
 } from "@/lib/auth";
 import { db, makeId, now } from "@/lib/db";
 import { subscriptions, users } from "@/lib/db/schema";
-import { appUrl, sendMail } from "@/lib/mailer";
+import { appUrl, brandEmailHtml, sendMail } from "@/lib/mailer";
 
 const signupSchema = z.object({
   email: z.string().email().max(255),
@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
     to: normalizedEmail,
     subject: "Verify your PlusSent email",
     text: `Welcome to PlusSent! Verify your email by visiting: ${verifyUrl}\nThis link expires in 24 hours.`,
-    html: `<p>Welcome to PlusSent!</p><p><a href="${verifyUrl}">Verify your email</a></p><p>This link expires in 24 hours.</p>`,
+    html: brandEmailHtml(`<p>Welcome to PlusSent!</p><p><a href="${verifyUrl}">Verify your email</a></p><p>This link expires in 24 hours.</p>`),
   });
 
   const { token } = await createSession({

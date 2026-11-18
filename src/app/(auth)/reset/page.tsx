@@ -4,6 +4,7 @@
 
 import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import BrandLogo from "../../_components/BrandLogo";
 
 const inputStyle: React.CSSProperties = {
   display: "block",
@@ -58,6 +59,7 @@ function ResetForm() {
 
   return (
     <main style={{ maxWidth: 420, margin: "80px auto", padding: 24, fontFamily: "system-ui, sans-serif" }}>
+      <div style={{ marginBottom: 20 }}><BrandLogo variant="full" height={40} /></div>
       <h1 style={{ fontSize: 28, marginBottom: 4 }}>Set a new password</h1>
       <p style={{ color: "#555", marginBottom: 24 }}>Your new password must be at least 8 characters.</p>
       {done ? (

@@ -62,3 +62,14 @@ Import this repo in Vercel (Framework: Next.js). Set env vars above
 schema on server start (`src/instrumentation.ts`). Background sending needs a
 separate worker/cron hitting the send queue (see `scripts/send-queue.ts`);
 do not run persistent jobs inside serverless functions.
+
+## Branding
+
+Official assets (unmodified) live in `public/brand/`: `plussent-logo.png`
+(full horizontal logo, white background — always shown on a white rounded
+surface, see `src/app/_components/BrandLogo.tsx`) and `plussent-icon.png`
+(standalone transparent icon — favicon, Apple Touch Icon, PWA icons).
+Brand colours: coral red `#FF3038`, dark navy `#071525`, white `#FFFFFF`
+(see `src/app/globals.css`). Favicon is a real multi-size `.ico`
+(16/32/48) generated from the icon PNG; `public/manifest.json` references
+the 192/512 PWA icons.

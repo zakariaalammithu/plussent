@@ -65,3 +65,17 @@ export async function sendMail(input: SendMailInput): Promise<SendMailResult> {
 export function appUrl(): string {
   return (process.env.APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
 }
+
+/**
+ * Branded HTML wrapper for transactional emails — official PlusSent logo
+ * (white-background asset, so it sits on a white tile) + footer. Plain-text
+ * bodies are unchanged; the logo is a remote image, so clients that block
+ * images still see the full text.
+ */
+export function brandEmailHtml(bodyHtml: string): string {
+  const logoUrl = `${appUrl()}/brand/plussent-logo.png`;
+  return `<div style="font-family:system-ui,sans-serif;color:#071525;max-width:560px;margin:0 auto;">` +
+    `<div style="padding:16px 0;"><img src="${logoUrl}" alt="PlusSent" width="180" style="display:block;background:#ffffff;border-radius:10px;padding:6px 10px;" /></div>` +
+    `<div>${bodyHtml}</div>` +
+    `<p style="color:#5b6577;font-size:13px;border-top:1px solid #dfe4ee;padding-top:12px;">© PlusSent · plussent.com</p></div>`;
+}

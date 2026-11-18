@@ -13,7 +13,7 @@ import {
 } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
-import { appUrl, sendMail } from "@/lib/mailer";
+import { appUrl, brandEmailHtml, sendMail } from "@/lib/mailer";
 
 const forgotSchema = z.object({ email: z.string().email().max(255) });
 
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     to: email,
     subject: "Reset your PlusSent password",
     text: `Reset your password by visiting: ${resetUrl}\nThis link expires in 1 hour. If you did not request this, ignore this email.`,
-    html: `<p><a href="${resetUrl}">Reset your password</a></p><p>This link expires in 1 hour. If you did not request this, ignore this email.</p>`,
+    html: brandEmailHtml(`<p><a href="${resetUrl}">Reset your password</a></p><p>This link expires in 1 hour. If you did not request this, ignore this email.</p>`),
   });
   await auditLog({ userId: user.id, action: "user.password_reset_requested", entity: "user", entityId: user.id });
   // Honest about delivery: when SMTP is not configured the mail was NOT sent.

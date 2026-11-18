@@ -4,6 +4,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import BrandLogo from "../../_components/BrandLogo";
 
 const inputStyle: React.CSSProperties = {
   display: "block",
@@ -67,6 +68,7 @@ export default function SignupPage() {
 
   return (
     <main style={{ maxWidth: 420, margin: "80px auto", padding: 24, fontFamily: "system-ui, sans-serif" }}>
+      <div style={{ marginBottom: 20 }}><BrandLogo variant="full" height={40} /></div>
       <h1 style={{ fontSize: 28, marginBottom: 4 }}>Create your PlusSent account</h1>
       <p style={{ color: "#555", marginBottom: 24 }}>Free plan to start — your own workspace is created automatically.</p>
       {error && (

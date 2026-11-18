@@ -5,6 +5,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import BrandLogo from "../../_components/BrandLogo";
 
 function VerifyForm() {
   const searchParams = useSearchParams();
@@ -41,6 +42,7 @@ function VerifyForm() {
 
   return (
     <main style={{ maxWidth: 420, margin: "80px auto", padding: 24, fontFamily: "system-ui, sans-serif" }}>
+      <div style={{ marginBottom: 20 }}><BrandLogo variant="full" height={40} /></div>
       <h1 style={{ fontSize: 28, marginBottom: 16 }}>Email verification</h1>
       <p
         role="status"
